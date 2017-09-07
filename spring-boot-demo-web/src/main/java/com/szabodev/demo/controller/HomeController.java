@@ -11,4 +11,9 @@ public class HomeController {
         return "home";
     }
 
+    @RequestMapping("/")
+    public String getRoot() {
+        return "home";
+    }
+
 }

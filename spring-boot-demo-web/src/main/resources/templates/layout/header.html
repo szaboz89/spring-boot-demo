@@ -20,8 +20,19 @@
             <li th:classappend="${#httpServletRequest.getRequestURI() == '/developers' ? 'active':''}"><a
                     th:href="@{/developers}">Developers</a></li>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"><a
+                    th:href="@{/login}"><span
+                    class="glyphicon glyphicon-log-in"></span>Login</a>
+            </li>
+            <li><a href="javascript: document.logoutForm.submit()"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+            </li>
+        </ul>
     </div>
 </nav>
+<form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 
 </body>
 </html>
