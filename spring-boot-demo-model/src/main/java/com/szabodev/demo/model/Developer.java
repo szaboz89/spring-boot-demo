@@ -1,6 +1,7 @@
 package com.szabodev.demo.model;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,7 @@ public class Developer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -33,11 +34,11 @@ public class Developer {
         this.skills = skills;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,7 +76,7 @@ public class Developer {
 
     public boolean hasSkill(Skill skill) {
         for (Skill containedSkill : getSkills()) {
-            if (containedSkill.getId() == skill.getId()) {
+            if (Objects.equals(containedSkill.getId(), skill.getId())) {
                 return true;
             }
         }

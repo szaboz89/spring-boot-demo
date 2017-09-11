@@ -15,8 +15,8 @@
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1>Developer</h1>
-
+                <h2>Developer skill</h2>
+                <br/>
                 <form class="form-horizontal" th:action="@{/developers/{id}/skills(id=${developer.id})}" method="post"
                       enctype="multipart/form-data">
                     <fieldset>
@@ -38,6 +38,8 @@
                             <label class="col-lg-2 control-label">Skills</label>
                             <div class="col-lg-10">
                                 <div th:each="skill : ${developer.skills}">
+                                    <a th:href="@{'/developers/' + ${developer.id} + '/skills/' + ${skill.id}}">remove</a>
+                                    -
                                     <span th:text="${skill.label}">Skill</span> - <span th:text="${skill.description}">Description</span>
                                 </div>
                             </div>
