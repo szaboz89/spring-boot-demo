@@ -23,7 +23,7 @@
     <dependencies>
         <dependency>
             <groupId>com.szabodev</groupId>
-            <artifactId>spring-boot-demo-dao</artifactId>
+            <artifactId>spring-boot-demo-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

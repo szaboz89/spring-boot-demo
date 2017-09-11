@@ -8,8 +8,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>spring-boot-demo-model</module>
-        <module>spring-boot-demo-web</module>
         <module>spring-boot-demo-dao</module>
+        <module>spring-boot-demo-service</module>
+        <module>spring-boot-demo-web</module>
     </modules>
     <packaging>pom</packaging>
 

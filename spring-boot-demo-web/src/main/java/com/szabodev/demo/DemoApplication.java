@@ -1,9 +1,9 @@
 package com.szabodev.demo;
 
-import com.szabodev.demo.model.Developer;
-import com.szabodev.demo.model.Skill;
-import com.szabodev.demo.dao.DeveloperRepository;
-import com.szabodev.demo.dao.SkillRepository;
+import com.szabodev.demo.dto.DeveloperDTO;
+import com.szabodev.demo.dto.SkillDTO;
+import com.szabodev.demo.service.DeveloperService;
+import com.szabodev.demo.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,14 +22,13 @@ import java.util.List;
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 
-    private final DeveloperRepository developerRepository;
-
-    private final SkillRepository skillRepository;
+    private final DeveloperService developerService;
+    private final SkillService skillService;
 
     @Autowired
-    public DemoApplication(DeveloperRepository developerRepository, SkillRepository skillRepository) {
-        this.developerRepository = developerRepository;
-        this.skillRepository = skillRepository;
+    public DemoApplication(DeveloperService developerService, SkillService skillService) {
+        this.developerService = developerService;
+        this.skillService = skillService;
     }
 
     public static void main(String[] args) {
@@ -39,18 +38,18 @@ public class DemoApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Skill javascript = new Skill("javascript", "Javascript language skill");
-        Skill java = new Skill("java", "Java language skill");
-        Skill html = new Skill("html", "HTML skill");
-        Skill css = new Skill("css", "CSS skill");
+        SkillDTO javascript = new SkillDTO("javascript", "Javascript language skill");
+        SkillDTO java = new SkillDTO("java", "Java language skill");
+        SkillDTO html = new SkillDTO("html", "HTML skill");
+        SkillDTO css = new SkillDTO("css", "CSS skill");
 
-        skillRepository.save(javascript);
-        skillRepository.save(java);
-        skillRepository.save(html);
-        skillRepository.save(css);
+        javascript = skillService.save(javascript);
+        java = skillService.save(java);
+        html = skillService.save(html);
+        css = skillService.save(css);
 
-        List<Developer> developers = new LinkedList<>();
-        developers.add(new Developer("Mark", "Taylor", "mark.taylor@example.com", Arrays.asList(javascript, java, html)));
-        developerRepository.saveAll(developers);
+        List<DeveloperDTO> developers = new LinkedList<>();
+        developers.add(new DeveloperDTO("Mark", "Taylor", "mark.taylor@example.com", Arrays.asList(javascript, java, html)));
+        developerService.saveAll(developers);
     }
 }
