@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
@@ -21,11 +23,13 @@
                     th:href="@{/developers}">Developers</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"><a
+            <li sec:authorize="isAuthenticated()" th:classappend="${#httpServletRequest.getRequestURI() == '/mypage' ? 'active':''}"><a
+                    th:href="@{/mypage}">My page</a></li>
+            <li sec:authorize="isAnonymous()" th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"><a
                     th:href="@{/login}"><span
                     class="glyphicon glyphicon-log-in"></span>Login</a>
             </li>
-            <li><a href="javascript: document.logoutForm.submit()"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+            <li sec:authorize="isAuthenticated()" ><a href="javascript: document.logoutForm.submit()"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
             </li>
         </ul>
     </div>
