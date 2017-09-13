@@ -13,7 +13,8 @@
 <div class="container">
 
     <div th:if="${param.error}">
-        <div id="login-alert" class="alert alert-danger col-sm-12">
+        <div id="login-alert" class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
             Invalid username and password.
         </div>
     </div>

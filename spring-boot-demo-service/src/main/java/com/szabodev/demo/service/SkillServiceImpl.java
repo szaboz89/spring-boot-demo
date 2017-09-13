@@ -38,4 +38,9 @@ public class SkillServiceImpl implements SkillService {
         skillDTO.setId(skill.getId());
         return skillDTO;
     }
+
+    @Override
+    public void delete(SkillDTO skill) {
+        skillRepository.delete(SkillMapper.INSTANCE.toEntity(skill));
+    }
 }

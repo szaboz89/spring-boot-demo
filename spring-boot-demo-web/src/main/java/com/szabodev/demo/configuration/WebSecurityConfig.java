@@ -11,12 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final AppConfig appConfig;
+
+    @Autowired
+    public WebSecurityConfig(AppConfig appConfig) {
+        this.appConfig = appConfig;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home","/login").permitAll()
-                .antMatchers("/rest/developers").permitAll()
+                .antMatchers("/", "/home", "/login").permitAll()
+                .antMatchers("/rest/*", "/rest/*/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -31,6 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("admin").password("admin").roles("USER");
+                .withUser(appConfig.getAdminName()).password(appConfig.getAdminPassword()).roles("ADMIN");
     }
 }

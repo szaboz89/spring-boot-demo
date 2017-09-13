@@ -12,4 +12,6 @@ public interface SkillService {
     Optional<SkillDTO> findById(Long skillId);
 
     SkillDTO save(SkillDTO skillDTO);
+
+    void delete(SkillDTO skill);
 }
