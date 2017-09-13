@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="APP-FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>application.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyyMMdd HH:mm:ss.SSS} %-5level %marker %logger{48} - %msg%n
+            </Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>archived_app_log/application.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="SERVER-FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>server.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyyMMdd HH:mm:ss.SSS} %-5level %marker %logger{48} - %msg%n
+            </Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>archived_server_log/server.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} %-5level %marker %logger{48} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <logger name="com.szabodev" level="debug" additivity="false">
+        <appender-ref ref="APP-FILE-AUDIT"/>
+    </logger>
+
+    <logger name="org.hibernate" level="warn">
+        <appender-ref ref="SERVER-FILE-AUDIT"/>
+    </logger>
+    <logger name="org.springframework.web" level="warn">
+        <appender-ref ref="SERVER-FILE-AUDIT"/>
+    </logger>
+
+    <!--<root level="error">-->
+    <!--<appender-ref ref="FILE-AUDIT"/>-->
+    <!--<appender-ref ref="STDOUT"/>-->
+    <!--</root>-->
+
+</configuration>
