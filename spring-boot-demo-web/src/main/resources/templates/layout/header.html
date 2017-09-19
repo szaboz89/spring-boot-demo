@@ -3,11 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <meta charset="UTF-8">
     <title>Header</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <script src="/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -18,27 +20,27 @@
         </div>
         <ul class="nav navbar-nav">
             <li th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}">
-                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/home}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
             </li>
             <li th:classappend="${#httpServletRequest.getRequestURI() == '/developers' ? 'active':''}">
-                <a th:href="@{/developers}">Developers</a>
+                <a th:href="@{/developers}"><i class="fa fa-user" aria-hidden="true"></i> Developers</a>
             </li>
             <li th:classappend="${#httpServletRequest.getRequestURI() == '/skills' ? 'active':''}">
-                <a th:href="@{/skills}">Skills</a>
+                <a th:href="@{/skills}"><i class="fa fa-rocket" aria-hidden="true"></i> Skills</a>
             </li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li sec:authorize="isAuthenticated()"
-                th:classappend="${#httpServletRequest.getRequestURI() == '/mypage' ? 'active':''}"><a
-                    th:href="@{/mypage}">My page</a></li>
+                th:classappend="${#httpServletRequest.getRequestURI() == '/mypage' ? 'active':''}">
+                <a th:href="@{/mypage}"><i class="fa fa-key" aria-hidden="true"></i> My page</a></li>
             <li sec:authorize="isAnonymous()"
-                th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"><a
-                    th:href="@{/login}"><span
-                    class="glyphicon glyphicon-log-in"></span>Login</a>
+                th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}">
+                <a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
             </li>
-            <li sec:authorize="isAuthenticated()"><a href="javascript: document.logoutForm.submit()"><span
-                    class="glyphicon glyphicon-log-out"></span>Logout</a>
+            <li sec:authorize="isAuthenticated()">
+                <a href="javascript: document.logoutForm.submit()">
+                    <span class="glyphicon glyphicon-log-out"></span>Logout</a>
             </li>
         </ul>
     </div>
