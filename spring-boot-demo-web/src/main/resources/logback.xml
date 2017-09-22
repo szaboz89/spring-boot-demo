@@ -2,14 +2,14 @@
 <configuration>
 
     <appender name="APP-FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>application.log</file>
+        <file>log/app.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>
                 %d{yyyyMMdd HH:mm:ss.SSS} %-5level %marker %logger{48} - %msg%n
             </Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>archived_app_log/application.%d{yyyy-MM-dd}.%i.log
+            <fileNamePattern>log/app-archived/app.%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -18,14 +18,14 @@
         </rollingPolicy>
     </appender>
     <appender name="SERVER-FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>server.log</file>
+        <file>log/server.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>
                 %d{yyyyMMdd HH:mm:ss.SSS} %-5level %marker %logger{48} - %msg%n
             </Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>archived_server_log/server.%d{yyyy-MM-dd}.%i.log
+            <fileNamePattern>log/server-archived/server.%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
