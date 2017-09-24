@@ -15,8 +15,7 @@
 <div class="container">
 
     <div class="container">
-        <h2>Something went wrong!</h2>
-        <h3>Exception details: </h3>
+        <h3 th:text="#{defeaultMessage}">Something went wrong! Exception details</h3>
         <br/>
         <div class="alert-danger row" th:if="${exception}" th:fragment="errorTemplate"
              style="height: 200px; overflow-x: scroll;">

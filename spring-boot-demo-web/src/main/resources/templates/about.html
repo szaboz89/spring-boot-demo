@@ -12,8 +12,8 @@
 <body>
 <div th:insert="layout/header :: body">...</div>
 <div class="container">
-    <p>Logged user: <span th:text="${loggedUser}"></span></p>
-    <p>Login time: <span th:text="${loginTime}"></span></p>
+    <p><span th:text="#{loggedUser}">Logged user</span>: <span th:text="${loggedUser}"></span></p>
+    <p><span th:text="#{loginTime}">Login time</span>: <span th:text="${loginTime}"></span></p>
 </div>
 </body>
 </html>
