@@ -1,5 +1,7 @@
 package com.szabodev.demo.service;
 
+import com.szabodev.demo.dao.DeveloperCustomRepository;
+import com.szabodev.demo.dao.DeveloperFilter;
 import com.szabodev.demo.dao.DeveloperRepository;
 import com.szabodev.demo.dto.DeveloperDTO;
 import com.szabodev.demo.mapper.DeveloperMapper;
@@ -15,14 +17,22 @@ public class DeveloperServiceImpl implements DeveloperService {
 
     private final DeveloperRepository developerRepository;
 
+    private final DeveloperCustomRepository developerCustomRepository;
+
     @Autowired
-    public DeveloperServiceImpl(DeveloperRepository developerRepository) {
+    public DeveloperServiceImpl(DeveloperRepository developerRepository, DeveloperCustomRepository developerCustomRepository) {
         this.developerRepository = developerRepository;
+        this.developerCustomRepository = developerCustomRepository;
     }
 
     @Override
     public List<DeveloperDTO> findAll() {
         return DeveloperMapper.INSTANCE.toDTOs((List<Developer>) developerRepository.findAll());
+    }
+
+    @Override
+    public List<DeveloperDTO> findByDeveloperCriteria(DeveloperFilter developerFilter) {
+        return DeveloperMapper.INSTANCE.toDTOs(developerCustomRepository.findByDeveloperCriteria(developerFilter));
     }
 
     @Override

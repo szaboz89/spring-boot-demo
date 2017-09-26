@@ -1,5 +1,6 @@
 package com.szabodev.demo.service;
 
+import com.szabodev.demo.dao.DeveloperFilter;
 import com.szabodev.demo.dto.DeveloperDTO;
 
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface DeveloperService {
 
     List<DeveloperDTO> findAll();
+
+    List<DeveloperDTO> findByDeveloperCriteria(DeveloperFilter developerFilter);
 
     DeveloperDTO save(DeveloperDTO developerDTO);
 

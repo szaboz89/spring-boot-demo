@@ -4,6 +4,7 @@ import com.szabodev.demo.dto.DeveloperDTO;
 import com.szabodev.demo.dto.SkillDTO;
 import com.szabodev.demo.service.DeveloperService;
 import com.szabodev.demo.service.SkillService;
+import com.szabodev.demo.dao.DeveloperFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,19 @@ public class DevelopersController {
     public DevelopersController(DeveloperService developerService, SkillService skillService) {
         this.developerService = developerService;
         this.skillService = skillService;
-    }
+   }
 
     @RequestMapping(value = "/developers", method = RequestMethod.GET)
-    public String listDevelopers(Model model) {
+    public String listDevelopers(Model model, @ModelAttribute("developerFilter") DeveloperFilter developerFilter) {
         logger.debug("listDevelopers called");
-        model.addAttribute("developers", developerService.findAll());
+        logger.debug("developerFilter: " + developerFilter);
+        if (developerFilter != null) {
+            model.addAttribute("developerFilter", developerFilter);
+            model.addAttribute("developers", developerService.findByDeveloperCriteria(developerFilter));
+        } else {
+            model.addAttribute("developers", developerService.findAll());
+            model.addAttribute("developerFilter", new DeveloperFilter());
+        }
         model.addAttribute("editedDeveloper", new DeveloperDTO());
         return "developers/developers";
     }
@@ -43,6 +51,7 @@ public class DevelopersController {
             }
         }
         developerService.save(newDeveloper);
+        model.addAttribute("developerFilter", new DeveloperFilter());
         model.addAttribute("developers", developerService.findAll());
         model.addAttribute("editedDeveloper", new DeveloperDTO());
         return "developers/developers";
@@ -53,6 +62,7 @@ public class DevelopersController {
         logger.debug("editDeveloper called");
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (developer != null) {
+            model.addAttribute("developerFilter", new DeveloperFilter());
             model.addAttribute("developers", developerService.findAll());
             model.addAttribute("editedDeveloper", developer);
             return "developers/developers";
@@ -116,7 +126,6 @@ public class DevelopersController {
             model.addAttribute("skills", skillService.findAll());
             return "redirect:/developers/" + developer.getId();
         }
-        model.addAttribute("developers", developerService.findAll());
         return "redirect:/developers";
     }
 

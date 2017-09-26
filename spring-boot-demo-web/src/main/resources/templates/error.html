@@ -12,33 +12,37 @@
 <body>
 
 <div th:insert="layout/header :: body">...</div>
+
+<!--<div class="container">-->
+<!--<h2>Hiba történt</h2>-->
+<!--<h3>Hiba logok:</h3>-->
+<!--<br/>-->
+<!--<div class="alert-danger row" th:if="${exception}" th:fragment="errorTemplate"-->
+<!--style="height: 200px; overflow-x: scroll;">-->
+<!--<p th:text="${exception.message}"></p>-->
+<!--<div th:each="stack,iterStat : ${exception.getStackTrace()}" th:text="${stack}"-->
+<!--th:class="${iterStat.index} != 0 ? 'small col-md-offset-1'">-->
+<!--</div>-->
+<!--</div>-->
+<!--<br/>-->
+<!--<div class="alert-danger row" th:if="${exception.cause}" style="height: 200px; overflow-x: scroll;">-->
+<!--<p th:text="${exception.cause.message}"></p>-->
+<!--<div th:each="stack,iterStat : ${exception.cause.getStackTrace()}" th:text="${stack}"-->
+<!--th:class="${iterStat.index} != 0 ? 'small col-md-offset-1'">-->
+<!--</div>-->
+<!--</div>-->
+<!--<br/>-->
+<!--<div class="alert-danger row" th:if="${exception.cause.cause}" style="height: 200px; overflow-x: scroll;">-->
+<!--<p th:text="${exception.cause.cause.message}"></p>-->
+<!--<div th:each="stack,iterStat : ${exception.cause.cause.getStackTrace()}" th:text="${stack}"-->
+<!--th:class="${iterStat.index} != 0 ? 'small col-md-offset-1'">-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
 <div class="container">
 
-    <div class="container">
-        <h3 th:text="#{defeaultMessage}">Something went wrong! Exception details</h3>
-        <br/>
-        <div class="alert-danger row" th:if="${exception}" th:fragment="errorTemplate"
-             style="height: 200px; overflow-x: scroll;">
-            <p th:text="${exception.message}"></p>
-            <div th:each="stack,iterStat : ${exception.getStackTrace()}" th:text="${stack}"
-                 th:class="${iterStat.index} != 0 ? 'small col-md-offset-1'">
-            </div>
-        </div>
-        <br/>
-        <div class="alert-danger row" th:if="${exception.cause}" style="height: 200px; overflow-x: scroll;">
-            <p th:text="${exception.cause.message}"></p>
-            <div th:each="stack,iterStat : ${exception.cause.getStackTrace()}" th:text="${stack}"
-                 th:class="${iterStat.index} != 0 ? 'small col-md-offset-1'">
-            </div>
-        </div>
-        <br/>
-        <div class="alert-danger row" th:if="${exception.cause.cause}" style="height: 200px; overflow-x: scroll;">
-            <p th:text="${exception.cause.cause.message}"></p>
-            <div th:each="stack,iterStat : ${exception.cause.cause.getStackTrace()}" th:text="${stack}"
-                 th:class="${iterStat.index} != 0 ? 'small col-md-offset-1'">
-            </div>
-        </div>
-    </div>
+    <h2 th:text="#{defeaultMessage}">Exception occured, see server logs for further details!</h2>
 
 </div>
 

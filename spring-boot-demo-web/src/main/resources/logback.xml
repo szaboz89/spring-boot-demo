@@ -50,9 +50,9 @@
         <appender-ref ref="SERVER-FILE-AUDIT"/>
     </logger>
 
-    <!--<root level="error">-->
-    <!--<appender-ref ref="FILE-AUDIT"/>-->
-    <!--<appender-ref ref="STDOUT"/>-->
-    <!--</root>-->
+    <root level="error">
+        <appender-ref ref="SERVER-FILE-AUDIT"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
 
 </configuration>
