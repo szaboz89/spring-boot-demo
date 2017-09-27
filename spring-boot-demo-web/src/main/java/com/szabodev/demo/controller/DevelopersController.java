@@ -24,12 +24,11 @@ public class DevelopersController {
     public DevelopersController(DeveloperService developerService, SkillService skillService) {
         this.developerService = developerService;
         this.skillService = skillService;
-   }
+    }
 
     @RequestMapping(value = "/developers", method = RequestMethod.GET)
     public String listDevelopers(Model model, @ModelAttribute("developerFilter") DeveloperFilter developerFilter) {
-        logger.debug("listDevelopers called");
-        logger.debug("developerFilter: " + developerFilter);
+        logger.debug("listDevelopers called, developerFilter: " + developerFilter);
         if (developerFilter != null) {
             model.addAttribute("developerFilter", developerFilter);
             model.addAttribute("developers", developerService.findByDeveloperCriteria(developerFilter));
@@ -43,7 +42,7 @@ public class DevelopersController {
 
     @RequestMapping(value = "/developers", method = RequestMethod.POST)
     public String addDeveloper(@ModelAttribute("editedDeveloper") DeveloperDTO newDeveloper, Model model) {
-        logger.debug("addDeveloper called");
+        logger.debug("addDeveloper called, newDeveloper: " + newDeveloper);
         if (newDeveloper.getId() != null) {
             DeveloperDTO developerDTO = developerService.findById(newDeveloper.getId()).orElse(null);
             if (developerDTO != null) {
@@ -59,7 +58,7 @@ public class DevelopersController {
 
     @RequestMapping("/developers/{id}/edit")
     public String editDeveloper(@PathVariable Long id, Model model) {
-        logger.debug("editDeveloper called");
+        logger.debug("editDeveloper called with id: " + id);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (developer != null) {
             model.addAttribute("developerFilter", new DeveloperFilter());
@@ -73,7 +72,7 @@ public class DevelopersController {
 
     @RequestMapping(value = "/developers/{id}/delete", method = RequestMethod.GET)
     public String deleteDeveloper(@PathVariable Long id, Model model) {
-        logger.debug("deleteDeveloper called");
+        logger.debug("deleteDeveloper called with id: " + id);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (developer != null) {
             developerService.delete(developer);
@@ -83,7 +82,7 @@ public class DevelopersController {
 
     @RequestMapping("/developers/{id}")
     public String viewDeveloper(@PathVariable Long id, Model model) {
-        logger.debug("viewDeveloper called");
+        logger.debug("viewDeveloper called with id: " + id);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (developer != null) {
             model.addAttribute("developer", developer);
@@ -96,7 +95,7 @@ public class DevelopersController {
 
     @RequestMapping(value = "/developers/{id}/skills", method = RequestMethod.POST)
     public String addSkill(@PathVariable Long id, @RequestParam Long skillId, Model model) {
-        logger.debug("addSkill called");
+        logger.debug("addSkill called, developer/skill id: " + id + "/" + skillId);
         SkillDTO skill = skillService.findById(skillId).orElse(null);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
 
@@ -116,7 +115,7 @@ public class DevelopersController {
 
     @RequestMapping(value = "/developers/{id}/skills/{skillId}", method = RequestMethod.GET)
     public String removeSkill(@PathVariable Long id, @PathVariable Long skillId, Model model) {
-        logger.debug("removeSkill called");
+        logger.debug("removeSkill called, developer/skill id: " + id + "/" + skillId);
         SkillDTO skill = skillService.findById(skillId).orElse(null);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (skill != null && developer != null) {

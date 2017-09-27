@@ -23,11 +23,11 @@ public class DeveloperCustomRepositoryImpl implements DeveloperCustomRepository 
         Criteria cr = em.unwrap(Session.class).createCriteria(Developer.class);
 
         if (developerFilter.getFirstName() != null && !"".equals((developerFilter.getFirstName()))) {
-            cr.add(Restrictions.like("firstName", "%" + (developerFilter.getFirstName() + "%")));
+            cr.add(Restrictions.ilike("firstName", "%" + (developerFilter.getFirstName() + "%")));
         }
 
         if (developerFilter.getLastName() != null && !"".equals(developerFilter.getLastName())) {
-            cr.add(Restrictions.eq("lastName", developerFilter.getLastName()));
+            cr.add(Restrictions.ilike("lastName", "%" + (developerFilter.getLastName() + "%")));
         }
         return cr.list();
     }
