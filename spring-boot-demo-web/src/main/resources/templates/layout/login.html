@@ -4,10 +4,19 @@
     <title>Login</title>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="/external/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/external/font-awesome/css/font-awesome.min.css">
-    <script src="/external/jquery/jquery-3.2.1.min.js"></script>
-    <script src="/external/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous" th:src="@{webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"
+          th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}">
+
 </head>
 <body>
 
@@ -26,13 +35,13 @@
         <div style="margin-bottom: 25px" class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
             <input id="login-username" type="text" class="form-control" name="username" value=""
-                   th:placeholder="#{username}">
+                   th:placeholder="#{username}" title="login-username">
         </div>
 
         <div style="margin-bottom: 25px" class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
             <input id="login-password" type="password" class="form-control" name="password"
-                   th:placeholder="#{password}">
+                   th:placeholder="#{password}" title="login-password">
         </div>
 
         <div style="margin-top:10px" class="form-group">
