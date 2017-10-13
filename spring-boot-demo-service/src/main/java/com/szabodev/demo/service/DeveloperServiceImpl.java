@@ -19,25 +19,28 @@ public class DeveloperServiceImpl implements DeveloperService {
 
     private final DeveloperCustomRepository developerCustomRepository;
 
+    private final DeveloperMapper developerMapper;
+
     @Autowired
-    public DeveloperServiceImpl(DeveloperRepository developerRepository, DeveloperCustomRepository developerCustomRepository) {
+    public DeveloperServiceImpl(DeveloperRepository developerRepository, DeveloperCustomRepository developerCustomRepository, DeveloperMapper developerMapper) {
         this.developerRepository = developerRepository;
         this.developerCustomRepository = developerCustomRepository;
+        this.developerMapper = developerMapper;
     }
 
     @Override
     public List<DeveloperDTO> findAll() {
-        return DeveloperMapper.INSTANCE.toDTOs((List<Developer>) developerRepository.findAll());
+        return developerMapper.toDTOs((List<Developer>) developerRepository.findAll());
     }
 
     @Override
     public List<DeveloperDTO> findByDeveloperCriteria(DeveloperFilter developerFilter) {
-        return DeveloperMapper.INSTANCE.toDTOs(developerCustomRepository.findByDeveloperCriteria(developerFilter));
+        return developerMapper.toDTOs(developerCustomRepository.findByDeveloperCriteria(developerFilter));
     }
 
     @Override
     public DeveloperDTO save(DeveloperDTO developerDTO) {
-        Developer developer = DeveloperMapper.INSTANCE.toEntity(developerDTO);
+        Developer developer = developerMapper.toEntity(developerDTO);
         developerRepository.save(developer);
         developerDTO.setId(developer.getId());
         return developerDTO;
@@ -46,16 +49,16 @@ public class DeveloperServiceImpl implements DeveloperService {
     @Override
     public Optional<DeveloperDTO> findById(Long id) {
         Optional<Developer> byId = developerRepository.findById(id);
-        return Optional.ofNullable(DeveloperMapper.INSTANCE.toDTO(byId.orElse(null)));
+        return Optional.ofNullable(developerMapper.toDTO(byId.orElse(null)));
     }
 
     @Override
     public void delete(DeveloperDTO developer) {
-        developerRepository.delete(DeveloperMapper.INSTANCE.toEntity(developer));
+        developerRepository.delete(developerMapper.toEntity(developer));
     }
 
     @Override
     public void saveAll(List<DeveloperDTO> developers) {
-        developerRepository.saveAll(DeveloperMapper.INSTANCE.toEntityList(developers));
+        developerRepository.saveAll(developerMapper.toEntityList(developers));
     }
 }

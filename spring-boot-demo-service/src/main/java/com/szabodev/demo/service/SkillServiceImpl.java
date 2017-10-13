@@ -15,25 +15,28 @@ public class SkillServiceImpl implements SkillService {
 
     private final SkillRepository skillRepository;
 
+    private final SkillMapper skillMapper;
+
     @Autowired
-    public SkillServiceImpl(SkillRepository skillRepository) {
+    public SkillServiceImpl(SkillRepository skillRepository, SkillMapper skillMapper) {
         this.skillRepository = skillRepository;
+        this.skillMapper = skillMapper;
     }
 
     @Override
     public List<SkillDTO> findAll() {
-        return SkillMapper.INSTANCE.toDTOs((List<Skill>) skillRepository.findAll());
+        return skillMapper.toDTOs((List<Skill>) skillRepository.findAll());
     }
 
     @Override
     public Optional<SkillDTO> findById(Long skillId) {
         Optional<Skill> byId = skillRepository.findById(skillId);
-        return Optional.ofNullable(SkillMapper.INSTANCE.toDTO(byId.orElse(null)));
+        return Optional.ofNullable(skillMapper.toDTO(byId.orElse(null)));
     }
 
     @Override
     public SkillDTO save(SkillDTO skillDTO) {
-        Skill skill = SkillMapper.INSTANCE.toEntity(skillDTO);
+        Skill skill = skillMapper.toEntity(skillDTO);
         skillRepository.save(skill);
         skillDTO.setId(skill.getId());
         return skillDTO;
@@ -41,6 +44,6 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public void delete(SkillDTO skill) {
-        skillRepository.delete(SkillMapper.INSTANCE.toEntity(skill));
+        skillRepository.delete(skillMapper.toEntity(skill));
     }
 }
