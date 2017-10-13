@@ -1,21 +1,53 @@
 package com.szabodev.demo.model;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.*;
-
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Developer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     @ManyToMany
     private List<Skill> skills;
+
+    @Column(nullable = false, updatable = false)
+    private ZonedDateTime createddDate;
+
+    private ZonedDateTime modifiedDate;
+
+    @CreatedBy
+    private String createdBy;
+
+    @LastModifiedBy
+    private String modifiedBy;
+
+    @PrePersist
+    public void onPrePersist() {
+        ZonedDateTime now = ZonedDateTime.now();
+        createddDate = now;
+        modifiedDate = now;
+    }
+
+    @PreUpdate
+    public void onPreUpdate() {
+        modifiedDate = ZonedDateTime.now();
+    }
 
     public Developer() {
         super();
@@ -70,6 +102,38 @@ public class Developer {
         this.skills = skills;
     }
 
+    public ZonedDateTime getCreateddDate() {
+        return createddDate;
+    }
+
+    public void setCreateddDate(ZonedDateTime createddDate) {
+        this.createddDate = createddDate;
+    }
+
+    public ZonedDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(ZonedDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
     public boolean hasSkill(Skill skill) {
         for (Skill containedSkill : getSkills()) {
             if (Objects.equals(containedSkill.getId(), skill.getId())) {
@@ -79,4 +143,18 @@ public class Developer {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Developer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", skills=" + skills +
+                ", createddDate=" + createddDate +
+                ", modifiedDate=" + modifiedDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedBy='" + modifiedBy + '\'' +
+                '}';
+    }
 }
