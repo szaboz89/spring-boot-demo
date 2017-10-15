@@ -1,5 +1,7 @@
 package com.szabodev.demo.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     private final AppConfig appConfig;
 
@@ -32,6 +36,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    logger.info("User successfully logged out, username: " + authentication.getName());
+                    response.sendRedirect("/");
+                })
                 .permitAll();
     }
 

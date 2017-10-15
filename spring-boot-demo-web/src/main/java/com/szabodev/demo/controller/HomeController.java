@@ -36,7 +36,7 @@ public class HomeController {
 
     @RequestMapping("/about")
     public String getAbout(Model model) {
-        model.addAttribute("loggedUser", sessionStorage.getUserName());
+        model.addAttribute("loggedUser", sessionStorage.getUsername());
         model.addAttribute("loginTime", sessionStorage.getLoginTime());
         return "about";
     }

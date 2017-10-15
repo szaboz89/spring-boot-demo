@@ -11,21 +11,21 @@ import java.time.LocalDateTime;
 public class SessionStorage {
 
     private LocalDateTime loginTime;
-    private String userName;
+    private String username;
 
     public LocalDateTime getLoginTime() {
         return loginTime;
     }
 
-    void setLoginTime(LocalDateTime loginTime) {
+    public void setLoginTime(LocalDateTime loginTime) {
         this.loginTime = loginTime;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
