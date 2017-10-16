@@ -22,29 +22,34 @@
 <div class="container">
     <div class="page-header" id="banner">
         <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-6">
-                <h2 th:text="#{skillsMenu}">Skills</h2>
-                <br/>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th th:text="#{skillName}">Skill name</th>
-                        <th th:text="#{skillDesc}">Description</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="skill : ${skills}">
-                        <td th:text="${skill.label}"></td>
-                        <td th:text="${skill.description}"></td>
-                        <td>
-                            <a class="btn btn-danger" th:href="@{'/skills/' + ${skill.id}} + '/delete'"
-                               onclick="return confirm('Are you sure you want to delete this item?');"
-                               th:text="#{delete}">Delete</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title" th:text="#{skillsMenu}">Skills</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th th:text="#{skillName}">Skill name</th>
+                                <th th:text="#{skillDesc}">Description</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="skill : ${skills}">
+                                <td th:text="${skill.label}">Skill</td>
+                                <td th:text="${skill.description}">Description</td>
+                                <td>
+                                    <a class="btn btn-danger" th:href="@{'/skills/' + ${skill.id}} + '/delete'"
+                                       onclick="return confirm('Are you sure you want to delete this item?');"
+                                       th:text="#{delete}">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -73,7 +78,8 @@
 
                         <div class="form-group">
                             <div class="col-lg-12 col-lg-offset-3">
-                                <button type="submit" class="btn btn-primary" name="button" th:text="#{create}">Create</button>
+                                <button type="submit" class="btn btn-primary" name="button" th:text="#{create}">Create
+                                </button>
                             </div>
                         </div>
                     </fieldset>
@@ -81,7 +87,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 </body>

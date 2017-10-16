@@ -41,6 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendRedirect("/");
                 })
                 .permitAll();
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
     }
 
     @Autowired

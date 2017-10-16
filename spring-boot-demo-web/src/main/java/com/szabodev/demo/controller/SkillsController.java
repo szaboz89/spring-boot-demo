@@ -1,7 +1,6 @@
 package com.szabodev.demo.controller;
 
 import com.szabodev.demo.dto.SkillDTO;
-import com.szabodev.demo.service.DeveloperService;
 import com.szabodev.demo.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,19 +16,19 @@ public class SkillsController {
     private final SkillService skillService;
 
     @Autowired
-    public SkillsController(DeveloperService developerService, SkillService skillService) {
+    public SkillsController(SkillService skillService) {
         this.skillService = skillService;
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.GET)
-    public String listDevelopers(Model model) {
+    public String listSkills(Model model) {
         model.addAttribute("skills", skillService.findAll());
         model.addAttribute("newSkill", new SkillDTO());
         return "developers/skills";
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
-    public String addDeveloper(@ModelAttribute("newSkill") SkillDTO newSkill, Model model) {
+    public String addSkill(@ModelAttribute("newSkill") SkillDTO newSkill, Model model) {
         skillService.save(newSkill);
         model.addAttribute("skills", skillService.findAll());
         model.addAttribute("newSkill", new SkillDTO());
@@ -37,7 +36,7 @@ public class SkillsController {
     }
 
     @RequestMapping(value = "/skills/{id}/delete", method = RequestMethod.GET)
-    public String deleteDeveloper(@PathVariable Long id, Model model) {
+    public String deleteSkill(@PathVariable Long id, Model model) {
         SkillDTO skill = skillService.findById(id).orElse(null);
         if (skill != null) {
             skillService.delete(skill);
