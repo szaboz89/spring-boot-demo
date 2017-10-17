@@ -1,6 +1,6 @@
 package com.szabodev.demo.dto;
 
-import org.springframework.data.annotation.Id;
+import com.szabodev.demo.model.DeveloperLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +12,11 @@ public class DeveloperDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private DeveloperDetailDTO developerDetail = new DeveloperDetailDTO();
+    private DeveloperLevel developerLevel;
     private List<SkillDTO> skills;
 
     public DeveloperDTO() {
-    }
-
-    public DeveloperDTO(String firstName, String lastName, String email,
-                        List<SkillDTO> skills) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.skills = skills;
     }
 
     public Long getId() {
@@ -55,6 +49,22 @@ public class DeveloperDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public DeveloperDetailDTO getDeveloperDetail() {
+        return developerDetail;
+    }
+
+    public void setDeveloperDetail(DeveloperDetailDTO developerDetail) {
+        this.developerDetail = developerDetail;
+    }
+
+    public DeveloperLevel getDeveloperLevel() {
+        return developerLevel;
+    }
+
+    public void setDeveloperLevel(DeveloperLevel developerLevel) {
+        this.developerLevel = developerLevel;
     }
 
     public List<SkillDTO> getSkills() {

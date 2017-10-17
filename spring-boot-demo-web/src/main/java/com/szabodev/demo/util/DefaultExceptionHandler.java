@@ -1,4 +1,4 @@
-package com.szabodev.demo.controller;
+package com.szabodev.demo.util;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

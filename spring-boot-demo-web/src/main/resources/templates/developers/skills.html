@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<div th:insert="layout/header :: body">...</div>
+<div th:insert="layout/header">...</div>
 <div class="container">
     <div class="page-header" id="banner">
         <div class="row">
@@ -37,11 +37,13 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <!--/*@thymesVar id="skills" type="java.util.List"*/-->
+                            <!--/*@thymesVar id="skill" type="com.szabodev.demo.dto.SkillDTO"*/-->
                             <tr th:each="skill : ${skills}">
                                 <td th:text="${skill.label}">Skill</td>
                                 <td th:text="${skill.description}">Description</td>
                                 <td>
-                                    <a class="btn btn-danger" th:href="@{'/skills/' + ${skill.id}} + '/delete'"
+                                    <a class="btn btn-danger" th:href="@{'/skills/' + ${skill.id} + '/delete'}"
                                        onclick="return confirm('Are you sure you want to delete this item?');"
                                        th:text="#{delete}">Delete</a>
                                 </td>
@@ -57,6 +59,7 @@
 
                 <h3 th:text="#{addOneSkill}">Add a skill</h3>
                 <br/>
+                <!--/*@thymesVar id="newSkill" type="com.szabodev.demo.dto.SkillDTO"*/-->
                 <form th:action="@{/skills}" method="post" enctype="multipart/form-data" class="form-horizontal"
                       th:object="${newSkill}">
                     <fieldset>

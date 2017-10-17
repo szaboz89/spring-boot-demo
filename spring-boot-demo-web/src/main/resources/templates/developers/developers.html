@@ -18,14 +18,14 @@
 
 </head>
 <body>
-<div th:insert="layout/header :: body">...</div>
+<div th:insert="layout/header">...</div>
 <div class="container">
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
                 <h2 th:text="#{developersMenu}">Developers</h2>
                 <br/>
-
+                <!--/*@thymesVar id="developerFilter" type="com.szabodev.demo.dao.DeveloperFilter"*/-->
                 <form th:action="@{/developers}" method="get" enctype="multipart/form-data" class="form-horizontal"
                       th:object="${developerFilter}">
                     <fieldset>
@@ -53,32 +53,36 @@
                         </div>
                     </fieldset>
                 </form>
-
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th th:text="#{name}">Name</th>
                         <th th:text="#{email}">Email</th>
+                        <th th:text="#{developerLevel}">Developer level</th>
                         <th th:text="#{skillsMenu}">Skills</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
+                    <!--/*@thymesVar id="developers" type="java.util.List"*/-->
+                    <!--/*@thymesVar id="developer" type="com.szabodev.demo.dto.DeveloperDTO"*/-->
                     <tr th:each="developer : ${developers}">
                         <td th:text="${developer.firstName + ' ' + developer.lastName}"></td>
                         <td th:text="${developer.email}"></td>
+                        <td th:text="#{${developer.developerLevel}}"></td>
+                        <!--/*@thymesVar id="skill" type="com.szabodev.demo.model.Skill"*/-->
                         <td>
-                     <span th:each="skill,iterStat : ${developer.skills}">
-                        <span th:text="${skill.label}">Skill</span><th:block
-                             th:if="${!iterStat.last}">,</th:block>
-                     </span>
+                            <span th:each="skill,iterStat : ${developer.skills}">
+                                <span th:text="${skill.label}">Skill</span><th:block
+                                    th:if="${!iterStat.last}">,</th:block>
+                            </span>
                         </td>
                         <td>
                             <a class="btn btn-success" th:href="@{/developers/{id}(id=${developer.id})}"
                                th:text="#{addSkills}">Add skills</a>
-                            <a class="btn btn-primary" th:href="@{'/developers/' + ${developer.id}} + '/edit'"
+                            <a class="btn btn-primary" th:href="@{'/developers/' + ${developer.id} + '/edit'}"
                                th:text="#{edit}">Edit</a>
-                            <a class="btn btn-danger" th:href="@{'/developers/' + ${developer.id}} + '/delete'"
+                            <a class="btn btn-danger" th:href="@{'/developers/' + ${developer.id} + '/delete'}"
                                th:text="#{delete}"
                                onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
                         </td>
@@ -87,13 +91,13 @@
                 </table>
             </div>
         </div>
+        <!--/*@thymesVar id="editedDeveloper" type="com.szabodev.demo.dto.DeveloperDTO"*/-->
         <div class="row">
             <div class="col-lg-6 col-md-7 col-sm-6">
 
                 <h3 th:if="${editedDeveloper.id} == null" th:text="#{addDeveloper}">Add a developer</h3>
                 <h3 th:if="${editedDeveloper.id} != null" th:text="#{updateDeveloper}">Update developer</h3>
                 <br/>
-
                 <form th:action="@{/developers}" method="post" enctype="multipart/form-data" class="form-horizontal"
                       th:object="${editedDeveloper}">
                     <fieldset>
@@ -115,18 +119,42 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-lg-3 control-label" th:text="#{comment}">Comment</label>
+                            <div class="col-lg-9">
+                                <input id="comment" type="text" class="form-control" name="comment" title="comment"
+                                       th:field="*{developerDetail.comment}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-lg-3 control-label" th:text="#{email}">Email</label>
                             <div class="col-lg-9">
                                 <input id="email" type="text" class="form-control" name="email" title="email"
                                        th:field="*{email}"/>
                             </div>
                         </div>
+                        <!--/*@thymesVar id="developerLevelValues" type="java.util.List"*/-->
                         <div class="form-group">
-                            <div th:if="*{id}== null" class="col-lg-12 col-lg-offset-3">
+                            <label class="col-lg-3 control-label" th:text="#{developerLevel}">Developer Level</label>
+                            <div class="col-lg-9">
+                                <select title="developerLevel" class="form-control" th:field="*{developerLevel}">
+                                    <option th:each="developerLevel : ${developerLevelValues}"
+                                            th:value="${developerLevel}"
+                                            th:text="#{${developerLevel}}">
+                                    </option>
+                                </select>
+                                <select title="developerLevel" class="form-control" th:remove="all">
+                                    <option>Easy</option>
+                                    <option>Medium</option>
+                                    <option>Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div th:if="*{id== null}" class="col-lg-12 col-lg-offset-3">
                                 <button type="submit" class="btn btn-primary" name="button" th:text="#{create}">Create
                                 </button>
                             </div>
-                            <div th:if="*{id}!= null" class="col-lg-12 col-lg-offset-3">
+                            <div th:if="*{id!= null}" class="col-lg-12 col-lg-offset-3">
                                 <button type="submit" class="btn btn-primary" name="button" th:text="#{update}">Update
                                 </button>
                                 <a th:href="@{/developers}" id="btn-cook" class="btn btn-warning"

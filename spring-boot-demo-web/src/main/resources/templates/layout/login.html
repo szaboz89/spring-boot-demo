@@ -19,9 +19,10 @@
 </head>
 <body>
 
-<div th:insert="layout/header :: body">...</div>
+<div th:insert="layout/header">...</div>
 <div class="container">
 
+    <!--suppress ThymeleafVariablesResolveInspection -->
     <div th:if="${param.error}">
         <div id="login-alert" class="alert alert-danger alert-dismissable">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>

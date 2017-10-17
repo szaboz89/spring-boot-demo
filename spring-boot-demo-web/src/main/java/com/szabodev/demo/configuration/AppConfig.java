@@ -18,11 +18,18 @@ public class AppConfig {
     @Value("${admin.password}")
     private String adminPassword;
 
+    @Value("${login.mode}")
+    private String loginMode;
+
     public String getAdminName() {
         return adminName;
     }
 
     public String getAdminPassword() {
         return adminPassword;
+    }
+
+    public String getLoginMode() {
+        return loginMode;
     }
 }

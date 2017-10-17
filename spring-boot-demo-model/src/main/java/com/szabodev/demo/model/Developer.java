@@ -23,11 +23,17 @@ public class Developer {
 
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private DeveloperDetail developerDetail;
+
+    @Enumerated(value = EnumType.STRING)
+    private DeveloperLevel developerLevel;
+
     @ManyToMany
     private List<Skill> skills;
 
     @Column(nullable = false, updatable = false)
-    private ZonedDateTime createddDate;
+    private ZonedDateTime createdDate;
 
     private ZonedDateTime modifiedDate;
 
@@ -40,7 +46,7 @@ public class Developer {
     @PrePersist
     public void onPrePersist() {
         ZonedDateTime now = ZonedDateTime.now();
-        createddDate = now;
+        createdDate = now;
         modifiedDate = now;
     }
 
@@ -94,6 +100,17 @@ public class Developer {
         this.email = email;
     }
 
+    public DeveloperDetail getDeveloperDetail() {
+        return developerDetail;
+    }
+
+    public void setDeveloperDetail(DeveloperDetail developerDetail) {
+        if (developerDetail != null) {
+            this.developerDetail = developerDetail;
+            developerDetail.setDeveloper(this);
+        }
+    }
+
     public List<Skill> getSkills() {
         return skills;
     }
@@ -102,12 +119,20 @@ public class Developer {
         this.skills = skills;
     }
 
-    public ZonedDateTime getCreateddDate() {
-        return createddDate;
+    public DeveloperLevel getDeveloperLevel() {
+        return developerLevel;
     }
 
-    public void setCreateddDate(ZonedDateTime createddDate) {
-        this.createddDate = createddDate;
+    public void setDeveloperLevel(DeveloperLevel developerLevel) {
+        this.developerLevel = developerLevel;
+    }
+
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
     public ZonedDateTime getModifiedDate() {
@@ -151,7 +176,7 @@ public class Developer {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", skills=" + skills +
-                ", createddDate=" + createddDate +
+                ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", modifiedBy='" + modifiedBy + '\'' +
