@@ -1,5 +1,6 @@
 package com.szabodev.demo.controller;
 
+import com.szabodev.demo.configuration.AppConfig;
 import com.szabodev.demo.service.SessionStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,13 @@ public class HomeController {
 
     private final LocaleResolver localeResolver;
 
+    private final AppConfig appConfig;
+
     @Autowired
-    public HomeController(SessionStorage sessionStorage, LocaleResolver localeResolver) {
+    public HomeController(SessionStorage sessionStorage, LocaleResolver localeResolver, AppConfig appConfig) {
         this.sessionStorage = sessionStorage;
         this.localeResolver = localeResolver;
+        this.appConfig = appConfig;
     }
 
     @RequestMapping("/home")
@@ -38,6 +42,7 @@ public class HomeController {
     public String getAbout(Model model) {
         model.addAttribute("loggedUser", sessionStorage.getUsername());
         model.addAttribute("loginTime", sessionStorage.getLoginTime());
+        model.addAttribute("appVersion", appConfig.getAppVersion());
         return "about";
     }
 

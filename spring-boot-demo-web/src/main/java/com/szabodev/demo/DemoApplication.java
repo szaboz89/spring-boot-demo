@@ -1,7 +1,10 @@
 package com.szabodev.demo;
 
+import com.szabodev.demo.configuration.AppConfig;
 import com.szabodev.demo.dto.SkillDTO;
 import com.szabodev.demo.service.SkillService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
@@ -23,13 +27,19 @@ import java.util.Locale;
 @EntityScan
 @ComponentScan
 @SpringBootApplication
+@EnableScheduling
 public class DemoApplication implements CommandLineRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
     private final SkillService skillService;
 
+    private final AppConfig appConfig;
+
     @Autowired
-    public DemoApplication(SkillService skillService) {
+    public DemoApplication(SkillService skillService, AppConfig appConfig) {
         this.skillService = skillService;
+        this.appConfig = appConfig;
     }
 
     public static void main(String[] args) {
@@ -51,6 +61,9 @@ public class DemoApplication implements CommandLineRunner {
             skillService.save(css);
         }
 
+        String appVersion = appConfig.getAppVersion();
+        System.out.println("Application version: " + appVersion);
+        logger.info("Application version: " + appVersion);
     }
 
     @Bean

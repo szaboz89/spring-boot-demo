@@ -32,14 +32,16 @@ public class SkillServiceImplTest {
 
     @Test
     public void findAll() throws Exception {
+        // given
         List<SkillDTO> skillsData = new ArrayList<>();
         skillsData.add(new SkillDTO());
         when(skillService.findAll()).thenReturn(skillsData);
 
+        // when
         List<SkillDTO> skills = skillService.findAll();
 
+        // then
         assertEquals(skills.size(), 1);
-        // verify(skillRepository, times(1)).findAll();
     }
 
 }

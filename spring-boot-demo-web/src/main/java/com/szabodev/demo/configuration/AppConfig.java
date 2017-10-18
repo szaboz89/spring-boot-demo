@@ -32,4 +32,15 @@ public class AppConfig {
     public String getLoginMode() {
         return loginMode;
     }
+
+    /**
+     * Returns the application version string when you run the jar
+     * When you run from IntelliJ it returns null
+     *
+     * @return the Implementation-Version defined in the MANIFEST.MF
+     */
+    public String getAppVersion() {
+        return getClass().getPackage().getImplementationVersion();
+    }
+
 }

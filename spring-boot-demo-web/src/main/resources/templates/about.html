@@ -18,12 +18,14 @@
 
 </head>
 <body>
-<div th:insert="layout/headerbody">...</div>
+<div th:insert="layout/header :: body">...</div>
 <!--/*@thymesVar id="loggedUser" type="java.lang.String"*/-->
 <!--/*@thymesVar id="loginTime" type="java.time.LocalDateTime"*/-->
+<!--/*@thymesVar id="appVersion" type="java.lang.String"*/-->
 <div class="container">
     <p><span th:text="#{loggedUser}">Logged user</span>: <span th:text="${loggedUser}"></span></p>
     <p><span th:text="#{loginTime}">Login time</span>: <span th:text="${loginTime}"></span></p>
+    <p><span th:text="#{appVersion}">Application version</span>: <span th:text="${appVersion}"></span></p>
 </div>
 </body>
 </html>
