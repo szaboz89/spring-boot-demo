@@ -86,4 +86,17 @@ public class DeveloperDTO {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "DeveloperDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", developerDetail=" + developerDetail +
+                ", developerLevel=" + developerLevel +
+                ", skills=" + skills +
+                '}';
+    }
 }

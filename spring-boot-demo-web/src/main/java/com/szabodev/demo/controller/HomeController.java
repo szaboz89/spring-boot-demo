@@ -2,6 +2,8 @@ package com.szabodev.demo.controller;
 
 import com.szabodev.demo.configuration.AppConfig;
 import com.szabodev.demo.service.SessionStorage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import java.util.Locale;
 
 @Controller
 public class HomeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     private final SessionStorage sessionStorage;
 
@@ -48,6 +52,7 @@ public class HomeController {
 
     @RequestMapping("/language/{code}")
     public String editDeveloper(@PathVariable String code, HttpServletRequest httpServletRequest) {
+        logger.debug("changeLanguage called, language code: " + code);
         this.localeResolver.setLocale(httpServletRequest, null, new Locale(code));
         return "redirect:/";
     }

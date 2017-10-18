@@ -21,4 +21,12 @@ public class DeveloperDetailDTO {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    @Override
+    public String toString() {
+        return "DeveloperDetailDTO{" +
+                "id=" + id +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

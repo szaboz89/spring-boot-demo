@@ -48,9 +48,9 @@ public class SkillDTO {
 
         SkillDTO skillDTO = (SkillDTO) o;
 
-        if (id != null ? !id.equals(skillDTO.id) : skillDTO.id != null) return false;
-        if (label != null ? !label.equals(skillDTO.label) : skillDTO.label != null) return false;
-        return description != null ? description.equals(skillDTO.description) : skillDTO.description == null;
+        return (id != null ? id.equals(skillDTO.id) : skillDTO.id == null)
+                && (label != null ? label.equals(skillDTO.label) : skillDTO.label == null)
+                && (description != null ? description.equals(skillDTO.description) : skillDTO.description == null);
     }
 
     @Override
@@ -59,5 +59,14 @@ public class SkillDTO {
         result = 31 * result + (label != null ? label.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SkillDTO{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

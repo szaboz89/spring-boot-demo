@@ -33,7 +33,7 @@ public class DeveloperRestService {
 
     @GetMapping("/developers/{id}")
     public DeveloperDTO getDeveloper(@PathVariable Long id) {
-        logger.debug("getDeveloperById");
+        logger.debug("getDeveloperById called with id: " + id);
         return developerService.findById(id).orElse(null);
     }
 }

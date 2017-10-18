@@ -175,6 +175,8 @@ public class Developer {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", developerDetail=" + developerDetail +
+                ", developerLevel=" + developerLevel +
                 ", skills=" + skills +
                 ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +

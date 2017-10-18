@@ -37,4 +37,13 @@ public class DeveloperDetail {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    @Override
+    public String toString() {
+        return "DeveloperDetail{" +
+                "id=" + id +
+                ", developer=" + developer +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }
