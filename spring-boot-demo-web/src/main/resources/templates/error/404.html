@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>About</title>
+    <title>Not found</title>
     <meta charset="UTF-8">
 
     <script src="https://code.jquery.com/jquery-3.2.1.js"
@@ -18,14 +18,12 @@
 
 </head>
 <body>
-<div th:insert="layout/header :: body">...</div>
-<!--/*@thymesVar id="loggedUser" type="java.lang.String"*/-->
-<!--/*@thymesVar id="loginTime" type="java.time.LocalDateTime"*/-->
-<!--/*@thymesVar id="appVersion" type="java.lang.String"*/-->
+
+<div th:insert="util/header :: body">...</div>
+
 <div class="container">
-    <p><span th:text="#{loggedUser}">Logged user</span>: <span th:text="${loggedUser}"></span></p>
-    <p><span th:text="#{loginTime}">Login time</span>: <span th:text="${loginTime}"></span></p>
-    <p><span th:text="#{appVersion}">Application version</span>: <span th:text="${appVersion}"></span></p>
+    <h3 th:text="#{pageNotFound}">Page not found</h3>
 </div>
+
 </body>
 </html>

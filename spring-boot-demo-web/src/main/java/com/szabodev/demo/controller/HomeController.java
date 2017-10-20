@@ -34,12 +34,12 @@ public class HomeController {
 
     @RequestMapping("/home")
     public String getMain() {
-        return "home";
+        return "util/home";
     }
 
     @RequestMapping("/")
     public String getRoot() {
-        return "home";
+        return "util/home";
     }
 
     @RequestMapping("/about")
@@ -47,7 +47,7 @@ public class HomeController {
         model.addAttribute("loggedUser", sessionStorage.getUsername());
         model.addAttribute("loginTime", sessionStorage.getLoginTime());
         model.addAttribute("appVersion", appConfig.getAppVersion());
-        return "about";
+        return "util/about";
     }
 
     @RequestMapping("/language/{code}")

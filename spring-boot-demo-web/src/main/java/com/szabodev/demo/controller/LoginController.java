@@ -36,7 +36,7 @@ public class LoginController {
             authenticateUserAndSetSession(request);
             return "redirect:/";
         }
-        return "layout/login";
+        return "util/login";
     }
 
     private void authenticateUserAndSetSession(HttpServletRequest request) {

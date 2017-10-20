@@ -2,7 +2,7 @@ package com.szabodev.demo.dto;
 
 import org.springframework.data.annotation.Id;
 
-public class SkillDTO {
+public class SkillDTO extends AuditDataDTO {
 
     @Id
     private Long id;
@@ -67,6 +67,6 @@ public class SkillDTO {
                 "id=" + id +
                 ", label='" + label + '\'' +
                 ", description='" + description + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

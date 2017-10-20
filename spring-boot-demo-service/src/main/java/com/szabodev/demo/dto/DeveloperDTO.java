@@ -2,6 +2,7 @@ package com.szabodev.demo.dto;
 
 import com.szabodev.demo.model.DeveloperLevel;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,11 @@ public class DeveloperDTO {
     private DeveloperDetailDTO developerDetail = new DeveloperDetailDTO();
     private DeveloperLevel developerLevel;
     private List<SkillDTO> skills;
+
+    private ZonedDateTime createdDate;
+    private ZonedDateTime modifiedDate;
+    private String createdBy;
+    private String modifiedBy;
 
     public DeveloperDTO() {
     }
@@ -78,6 +84,38 @@ public class DeveloperDTO {
         this.skills = skills;
     }
 
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public ZonedDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(ZonedDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
     public boolean hasSkill(SkillDTO skill) {
         for (SkillDTO containedSkill : getSkills()) {
             if (Objects.equals(containedSkill.getId(), skill.getId())) {
@@ -97,6 +135,10 @@ public class DeveloperDTO {
                 ", developerDetail=" + developerDetail +
                 ", developerLevel=" + developerLevel +
                 ", skills=" + skills +
+                ", createdDate=" + createdDate +
+                ", modifiedDate=" + modifiedDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedBy='" + modifiedBy + '\'' +
                 '}';
     }
 }
