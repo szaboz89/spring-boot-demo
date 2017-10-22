@@ -1,6 +1,8 @@
 package com.szabodev.demo.dto;
 
 import com.szabodev.demo.model.DeveloperLevel;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -10,9 +12,16 @@ import java.util.Objects;
 public class DeveloperDTO {
 
     private Long id;
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @Email
     private String email;
+
     private DeveloperDetailDTO developerDetail = new DeveloperDetailDTO();
     private DeveloperLevel developerLevel;
     private List<SkillDTO> skills;

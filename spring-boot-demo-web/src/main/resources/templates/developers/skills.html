@@ -22,6 +22,53 @@
 <div class="container">
     <div class="page-header" id="banner">
         <div class="row">
+            <div class="col-lg-6 col-md-7 col-sm-6">
+
+                <h3 th:text="#{addOneSkill}">Add a skill</h3>
+                <br/>
+                <!--/*@thymesVar id="newSkill" type="com.szabodev.demo.dto.SkillDTO"*/-->
+                <form th:action="@{/skills}" method="post" enctype="multipart/form-data" class="form-horizontal"
+                      th:object="${newSkill}">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                        <p th:text="#{correctErrors}">Please correct errors</p>
+                        <br/>
+                        <div>
+                            <ul>
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+                                    Error detail
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <div class="form-group" th:class="${#fields.hasErrors('label')}
+                                ? 'form-group has-error' : 'form-group'">
+                            <label class="col-lg-3 control-label" th:text="#{skillName}">Skill name</label>
+                            <div class="col-lg-9">
+                                <input id="skillName" type="text" class="form-control" name="skillName"
+                                       title="skillName"
+                                       th:field="*{label}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" th:text="#{skillDesc}">Description</label>
+                            <div class="col-lg-9">
+                                <input id="description" type="text" class="form-control" name="description" title="description"
+                                       th:field="*{description}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-12 col-lg-offset-3">
+                                <button type="submit" class="btn btn-primary" name="button" th:text="#{create}">Create
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h2 class="panel-title" th:text="#{skillsMenu}">Skills</h2>
@@ -52,41 +99,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 col-md-7 col-sm-6">
-
-                <h3 th:text="#{addOneSkill}">Add a skill</h3>
-                <br/>
-                <!--/*@thymesVar id="newSkill" type="com.szabodev.demo.dto.SkillDTO"*/-->
-                <form th:action="@{/skills}" method="post" enctype="multipart/form-data" class="form-horizontal"
-                      th:object="${newSkill}">
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" th:text="#{skillName}">Skill name</label>
-                            <div class="col-lg-9">
-                                <input id="firstName" type="text" class="form-control" name="firstName"
-                                       title="firstName"
-                                       th:field="*{label}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" th:text="#{skillDesc}">Description</label>
-                            <div class="col-lg-9">
-                                <input id="lastName" type="text" class="form-control" name="lastName" title="lastName"
-                                       th:field="*{description}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-lg-12 col-lg-offset-3">
-                                <button type="submit" class="btn btn-primary" name="button" th:text="#{create}">Create
-                                </button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
             </div>
         </div>
     </div>

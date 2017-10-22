@@ -21,9 +21,97 @@
 <div th:insert="util/header :: body">...</div>
 <div class="container">
     <div class="page-header" id="banner">
+        <!--/*@thymesVar id="editedDeveloper" type="com.szabodev.demo.dto.DeveloperDTO"*/-->
+        <div class="row">
+            <div class="col-lg-6 col-md-7 col-sm-6">
+
+                <h3 th:if="${editedDeveloper.id} == null" th:text="#{addDeveloper}">Add a developer</h3>
+                <h3 th:if="${editedDeveloper.id} != null" th:text="#{updateDeveloper}">Update developer</h3>
+                <br/>
+                <form th:action="@{/developers}" method="post" enctype="multipart/form-data" class="form-horizontal"
+                      th:object="${editedDeveloper}">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                        <p th:text="#{correctErrors}">Please correct errors</p>
+                        <br/>
+                        <div>
+                            <ul>
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+                                    Error detail
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <input type="hidden" id="id" name="id" th:field="*{id}"/>
+                        <!--<input type="hidden" id="skills" name="id" th:field="*{skills}"/>-->
+                        <div class="form-group" th:class="${#fields.hasErrors('firstName')}
+                                ? 'form-group has-error' : 'form-group'">
+                            <label class="col-lg-3 control-label" th:text="#{firstName}">First name</label>
+                            <div class="col-lg-9">
+                                <input id="firstName" type="text" class="form-control" name="firstName"
+                                       title="firstName"
+                                       th:field="*{firstName}"/>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('lastName')}
+                                ? 'form-group has-error' : 'form-group'">
+                            <label class="col-lg-3 control-label" th:text="#{lastName}">Last name</label>
+                            <div class="col-lg-9">
+                                <input id="lastName" type="text" class="form-control" name="lastName" title="lastName"
+                                       th:field="*{lastName}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" th:text="#{comment}">Comment</label>
+                            <div class="col-lg-9">
+                                <input id="comment" type="text" class="form-control" name="comment" title="comment"
+                                       th:field="*{developerDetail.comment}"/>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('email')}
+                                ? 'form-group has-error' : 'form-group'">
+                            <label class="col-lg-3 control-label" th:text="#{email}">Email</label>
+                            <div class="col-lg-9">
+                                <input id="email" type="text" class="form-control" name="email" title="email"
+                                       th:field="*{email}"/>
+                            </div>
+                        </div>
+                        <!--/*@thymesVar id="developerLevelValues" type="java.util.List"*/-->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" th:text="#{developerLevel}">Developer Level</label>
+                            <div class="col-lg-9">
+                                <select title="developerLevel" class="form-control" th:field="*{developerLevel}">
+                                    <option th:each="developerLevel : ${developerLevelValues}"
+                                            th:value="${developerLevel}"
+                                            th:text="#{${developerLevel}}">
+                                    </option>
+                                </select>
+                                <select title="developerLevel" class="form-control" th:remove="all">
+                                    <option>Easy</option>
+                                    <option>Medium</option>
+                                    <option>Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div th:if="*{id== null}" class="col-lg-12 col-lg-offset-3">
+                                <button type="submit" class="btn btn-primary" name="button" th:text="#{create}">Create
+                                </button>
+                            </div>
+                            <div th:if="*{id!= null}" class="col-lg-12 col-lg-offset-3">
+                                <button type="submit" class="btn btn-primary" name="button" th:text="#{update}">Update
+                                </button>
+                                <a th:href="@{/developers}" id="btn-cook" class="btn btn-warning"
+                                   role="button" th:text="#{cancel}">Cancel</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h2 th:text="#{developersMenu}">Developers</h2>
+                <h3 th:text="#{developersMenu}">Developers</h3>
                 <br/>
                 <!--/*@thymesVar id="developerFilter" type="com.szabodev.demo.dao.DeveloperFilter"*/-->
                 <form th:action="@{/developers}" method="get" enctype="multipart/form-data" class="form-horizontal"
@@ -64,8 +152,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!--/*@thymesVar id="developers" type="java.util.List"*/-->
                     <!--/*@thymesVar id="developer" type="com.szabodev.demo.dto.DeveloperDTO"*/-->
+                    <!--/*@thymesVar id="developers" type="java.util.List"*/-->
                     <tr th:each="developer : ${developers}">
                         <td th:text="${developer.firstName + ' ' + developer.lastName}"></td>
                         <td th:text="${developer.email}"></td>
@@ -89,80 +177,6 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <!--/*@thymesVar id="editedDeveloper" type="com.szabodev.demo.dto.DeveloperDTO"*/-->
-        <div class="row">
-            <div class="col-lg-6 col-md-7 col-sm-6">
-
-                <h3 th:if="${editedDeveloper.id} == null" th:text="#{addDeveloper}">Add a developer</h3>
-                <h3 th:if="${editedDeveloper.id} != null" th:text="#{updateDeveloper}">Update developer</h3>
-                <br/>
-                <form th:action="@{/developers}" method="post" enctype="multipart/form-data" class="form-horizontal"
-                      th:object="${editedDeveloper}">
-                    <fieldset>
-                        <input type="hidden" id="id" name="id" th:field="*{id}"/>
-                        <!--<input type="hidden" id="skills" name="id" th:field="*{skills}"/>-->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" th:text="#{firstName}">First name</label>
-                            <div class="col-lg-9">
-                                <input id="firstName" type="text" class="form-control" name="firstName"
-                                       title="firstName"
-                                       th:field="*{firstName}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" th:text="#{lastName}">Last name</label>
-                            <div class="col-lg-9">
-                                <input id="lastName" type="text" class="form-control" name="lastName" title="lastName"
-                                       th:field="*{lastName}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" th:text="#{comment}">Comment</label>
-                            <div class="col-lg-9">
-                                <input id="comment" type="text" class="form-control" name="comment" title="comment"
-                                       th:field="*{developerDetail.comment}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" th:text="#{email}">Email</label>
-                            <div class="col-lg-9">
-                                <input id="email" type="text" class="form-control" name="email" title="email"
-                                       th:field="*{email}"/>
-                            </div>
-                        </div>
-                        <!--/*@thymesVar id="developerLevelValues" type="java.util.List"*/-->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label" th:text="#{developerLevel}">Developer Level</label>
-                            <div class="col-lg-9">
-                                <select title="developerLevel" class="form-control" th:field="*{developerLevel}">
-                                    <option th:each="developerLevel : ${developerLevelValues}"
-                                            th:value="${developerLevel}"
-                                            th:text="#{${developerLevel}}">
-                                    </option>
-                                </select>
-                                <select title="developerLevel" class="form-control" th:remove="all">
-                                    <option>Easy</option>
-                                    <option>Medium</option>
-                                    <option>Hard</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div th:if="*{id== null}" class="col-lg-12 col-lg-offset-3">
-                                <button type="submit" class="btn btn-primary" name="button" th:text="#{create}">Create
-                                </button>
-                            </div>
-                            <div th:if="*{id!= null}" class="col-lg-12 col-lg-offset-3">
-                                <button type="submit" class="btn btn-primary" name="button" th:text="#{update}">Update
-                                </button>
-                                <a th:href="@{/developers}" id="btn-cook" class="btn btn-warning"
-                                   role="button" th:text="#{cancel}">Cancel</a>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
             </div>
         </div>
     </div>

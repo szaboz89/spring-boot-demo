@@ -19,6 +19,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Configuration
@@ -50,15 +52,12 @@ public class DemoApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         if (skillService.findAll().size() == 0) {
-            SkillDTO javascript = new SkillDTO("javascript", "Javascript language skill");
-            SkillDTO java = new SkillDTO("java", "Java language skill");
-            SkillDTO html = new SkillDTO("html", "HTML skill");
-            SkillDTO css = new SkillDTO("css", "CSS skill");
-
-            skillService.save(javascript);
-            skillService.save(java);
-            skillService.save(html);
-            skillService.save(css);
+            List<SkillDTO> defaultSkills = new ArrayList<>();
+            defaultSkills.add(new SkillDTO("javascript", "Javascript language skill"));
+            defaultSkills.add(new SkillDTO("java", "Java language skill"));
+            defaultSkills.add(new SkillDTO("html", "HTML skill"));
+            defaultSkills.add(new SkillDTO("css", "CSS skill"));
+            defaultSkills.forEach(skillService::save);
         }
 
         String appVersion = appConfig.getAppVersion();

@@ -11,12 +11,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class DevelopersController {
 
     private static final Logger logger = LoggerFactory.getLogger(DevelopersController.class);
+
+    private static final String REDIRECT_DEVELOPERS = "redirect:/developers";
+    private static final String REDIRECT_DEVELOPERS_ID = "redirect:/developers/";
+    private static final String DEVELOPERS = "developers/developers";
+    private static final String DEVELOPER_VIEW = "developers/developer";
 
     private final DeveloperService developerService;
     private final SkillService skillService;
@@ -39,12 +47,21 @@ public class DevelopersController {
         }
         model.addAttribute("editedDeveloper", new DeveloperDTO());
         model.addAttribute("developerLevelValues", DeveloperLevel.stringValues());
-        return "developers/developers";
+        return DEVELOPERS;
     }
 
     @RequestMapping(value = "/developers", method = RequestMethod.POST)
-    public String addDeveloper(@ModelAttribute("editedDeveloper") DeveloperDTO newDeveloper, Model model) {
+    public String addDeveloper(@Valid @ModelAttribute("editedDeveloper") DeveloperDTO newDeveloper, BindingResult bindingResult, Model model) {
         logger.debug("addDeveloper called, newDeveloper: " + newDeveloper);
+        if (bindingResult.hasErrors()) {
+            logger.debug("bindingResult has errors: ");
+            bindingResult.getAllErrors().forEach(objectError -> logger.debug(objectError.toString()));
+            model.addAttribute("developers", developerService.findAll());
+            model.addAttribute("developerFilter", new DeveloperFilter());
+            model.addAttribute("editedDeveloper", newDeveloper);
+            model.addAttribute("developerLevelValues", DeveloperLevel.stringValues());
+            return DEVELOPERS;
+        }
         if (newDeveloper.getId() != null) {
             DeveloperDTO developerDTO = developerService.findById(newDeveloper.getId()).orElse(null);
             if (developerDTO != null) {
@@ -52,7 +69,7 @@ public class DevelopersController {
             }
         }
         developerService.save(newDeveloper);
-        return "redirect:/developers";
+        return REDIRECT_DEVELOPERS;
     }
 
     @RequestMapping("/developers/{id}/edit")
@@ -64,9 +81,9 @@ public class DevelopersController {
             model.addAttribute("developers", developerService.findAll());
             model.addAttribute("editedDeveloper", developer);
             model.addAttribute("developerLevelValues", DeveloperLevel.stringValues());
-            return "developers/developers";
+            return DEVELOPERS;
         } else {
-            return "redirect:/developers";
+            return REDIRECT_DEVELOPERS;
         }
     }
 
@@ -77,7 +94,7 @@ public class DevelopersController {
         if (developer != null) {
             developerService.delete(developer);
         }
-        return "redirect:/developers";
+        return REDIRECT_DEVELOPERS;
     }
 
     @RequestMapping("/developers/{id}")
@@ -87,9 +104,9 @@ public class DevelopersController {
         if (developer != null) {
             model.addAttribute("developer", developer);
             model.addAttribute("skills", skillService.findAll());
-            return "developers/developer";
+            return DEVELOPER_VIEW;
         } else {
-            return "redirect:/developers";
+            return REDIRECT_DEVELOPERS;
         }
     }
 
@@ -106,11 +123,11 @@ public class DevelopersController {
             developerService.save(developer);
             model.addAttribute("developer", developerService.findById(id));
             model.addAttribute("skills", skillService.findAll());
-            return "redirect:/developers/" + developer.getId();
+            return REDIRECT_DEVELOPERS_ID + developer.getId();
         }
 
         model.addAttribute("developers", developerService.findAll());
-        return "redirect:/developers";
+        return REDIRECT_DEVELOPERS;
     }
 
     @RequestMapping(value = "/developers/{id}/skills/{skillId}", method = RequestMethod.GET)
@@ -123,9 +140,9 @@ public class DevelopersController {
             developerService.save(developer);
             model.addAttribute("developer", developerService.findById(id));
             model.addAttribute("skills", skillService.findAll());
-            return "redirect:/developers/" + developer.getId();
+            return REDIRECT_DEVELOPERS_ID + developer.getId();
         }
-        return "redirect:/developers";
+        return REDIRECT_DEVELOPERS;
     }
 
 }

@@ -1,12 +1,14 @@
 package com.szabodev.demo.dto;
 
-import org.springframework.data.annotation.Id;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class SkillDTO extends AuditDataDTO {
 
-    @Id
     private Long id;
+
+    @NotBlank
     private String label;
+
     private String description;
 
     public SkillDTO() {
