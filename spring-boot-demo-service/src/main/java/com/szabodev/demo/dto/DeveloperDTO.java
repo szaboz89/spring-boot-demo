@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class DeveloperDTO {
 
@@ -126,12 +125,7 @@ public class DeveloperDTO {
     }
 
     public boolean hasSkill(SkillDTO skill) {
-        for (SkillDTO containedSkill : getSkills()) {
-            if (Objects.equals(containedSkill.getId(), skill.getId())) {
-                return true;
-            }
-        }
-        return false;
+        return skills.contains(skill);
     }
 
     @Override

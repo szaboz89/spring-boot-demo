@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class DevelopersController {
@@ -102,8 +104,11 @@ public class DevelopersController {
         logger.debug("viewDeveloper called with id: " + id);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (developer != null) {
+            List<SkillDTO> skills = developer.getSkills();
+            List<SkillDTO> available = skillService.findAll();
+            available.removeAll(skills);
             model.addAttribute("developer", developer);
-            model.addAttribute("skills", skillService.findAll());
+            model.addAttribute("skills", available);
             return DEVELOPER_VIEW;
         } else {
             return REDIRECT_DEVELOPERS;
@@ -113,21 +118,20 @@ public class DevelopersController {
     @RequestMapping(value = "/developers/{id}/skills", method = RequestMethod.POST)
     public String addSkill(@PathVariable Long id, @RequestParam Long skillId, Model model) {
         logger.debug("addSkill called, developer/skill id: " + id + "/" + skillId);
-        SkillDTO skill = skillService.findById(skillId).orElse(null);
-        DeveloperDTO developer = developerService.findById(id).orElse(null);
-
-        if (developer != null) {
-            if (!developer.hasSkill(skill)) {
-                developer.getSkills().add(skill);
-            }
-            developerService.save(developer);
-            model.addAttribute("developer", developerService.findById(id));
-            model.addAttribute("skills", skillService.findAll());
-            return REDIRECT_DEVELOPERS_ID + developer.getId();
+        Optional<DeveloperDTO> developer = developerService.findById(id);
+        if (!developer.isPresent()) {
+            return REDIRECT_DEVELOPERS;
+        } else if (skillId == null) {
+            return REDIRECT_DEVELOPERS_ID + developer.get().getId();
         }
-
-        model.addAttribute("developers", developerService.findAll());
-        return REDIRECT_DEVELOPERS;
+        Optional<SkillDTO> skill = skillService.findById(skillId);
+        if (skill.isPresent()) {
+            if (!developer.get().hasSkill(skill.get())) {
+                developer.get().getSkills().add(skill.get());
+                developerService.save(developer.get());
+            }
+        }
+        return REDIRECT_DEVELOPERS_ID + developer.get().getId();
     }
 
     @RequestMapping(value = "/developers/{id}/skills/{skillId}", method = RequestMethod.GET)

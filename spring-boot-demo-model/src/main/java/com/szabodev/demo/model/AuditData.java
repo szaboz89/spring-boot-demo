@@ -7,17 +7,17 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 abstract class AuditData {
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
-    private Date modifiedDate;
+    private LocalDateTime modifiedDate;
 
     @CreatedBy
     private String createdBy;
@@ -25,19 +25,19 @@ abstract class AuditData {
     @LastModifiedBy
     private String modifiedBy;
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getModifiedDate() {
+    public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 

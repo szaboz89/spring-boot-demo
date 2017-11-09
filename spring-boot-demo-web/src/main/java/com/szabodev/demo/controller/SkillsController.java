@@ -56,7 +56,7 @@ public class SkillsController {
     public String deleteSkill(@PathVariable Long id) {
         logger.debug("deleteSkill called with id: " + id);
         SkillDTO skill = skillService.findById(id).orElse(null);
-        if (skill != null) {
+        if (skill != null && !skill.isConnected()) {
             skillService.delete(skill);
         }
         return REDIRECT_SKILLS;

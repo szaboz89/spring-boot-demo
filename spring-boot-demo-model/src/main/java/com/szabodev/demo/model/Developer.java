@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -30,6 +29,9 @@ public class Developer {
     private DeveloperLevel developerLevel;
 
     @ManyToMany
+    @JoinTable(name = "DEVELOPER_TO_SKILL",
+            joinColumns = @JoinColumn(name = "developer_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills;
 
     @Column(nullable = false, updatable = false)
@@ -157,15 +159,6 @@ public class Developer {
 
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
-    }
-
-    public boolean hasSkill(Skill skill) {
-        for (Skill containedSkill : getSkills()) {
-            if (Objects.equals(containedSkill.getId(), skill.getId())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

@@ -48,11 +48,10 @@
                             <label class="col-lg-2 control-label" th:text="#{skillsMenu}">Skills</label>
                             <div class="col-lg-10">
                                 <div th:each="skill : ${developer.skills}">
-                                    <a th:href="@{'/developers/' + ${developer.id} + '/skills/' + ${skill.id}}"
-                                       onclick="return confirm('Are you sure you want to delete this item?');"
-                                       th:text="#{remove}">remove</a>
-                                    -
                                     <span th:text="${skill.label}">Skill</span> - <span th:text="${skill.description}">Description</span>
+                                    <a class="btn btn-xs btn-danger"
+                                       th:href="@{'/developers/' + ${developer.id} + '/skills/' + ${skill.id}}"
+                                       onclick="return confirm('Are you sure you want to delete this item?');">x</a>
                                 </div>
                             </div>
                         </div>

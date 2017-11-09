@@ -92,6 +92,7 @@
                                 <td>
                                     <a class="btn btn-danger" th:href="@{'/skills/' + ${skill.id} + '/delete'}"
                                        onclick="return confirm('Are you sure you want to delete this item?');"
+                                       th:classappend="${skill.connected} ? 'disabled' : ''"
                                        th:text="#{delete}">Delete</a>
                                 </td>
                             </tr>

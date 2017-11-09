@@ -11,6 +11,8 @@ public class SkillDTO extends AuditDataDTO {
 
     private String description;
 
+    private boolean connected;
+
     public SkillDTO() {
     }
 
@@ -43,6 +45,14 @@ public class SkillDTO extends AuditDataDTO {
         this.description = description;
     }
 
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,17 +60,12 @@ public class SkillDTO extends AuditDataDTO {
 
         SkillDTO skillDTO = (SkillDTO) o;
 
-        return (id != null ? id.equals(skillDTO.id) : skillDTO.id == null)
-                && (label != null ? label.equals(skillDTO.label) : skillDTO.label == null)
-                && (description != null ? description.equals(skillDTO.description) : skillDTO.description == null);
+        return id.equals(skillDTO.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return id.hashCode();
     }
 
     @Override
@@ -69,6 +74,7 @@ public class SkillDTO extends AuditDataDTO {
                 "id=" + id +
                 ", label='" + label + '\'' +
                 ", description='" + description + '\'' +
+                ", connected=" + connected +
                 "} " + super.toString();
     }
 }

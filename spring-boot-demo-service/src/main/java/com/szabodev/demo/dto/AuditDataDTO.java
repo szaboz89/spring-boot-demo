@@ -1,27 +1,27 @@
 package com.szabodev.demo.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 abstract class AuditDataDTO {
 
-    private Date createdDate;
-    private Date modifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
     private String createdBy;
     private String modifiedBy;
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getModifiedDate() {
+    public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
