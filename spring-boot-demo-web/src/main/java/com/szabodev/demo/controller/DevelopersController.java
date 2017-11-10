@@ -92,10 +92,8 @@ public class DevelopersController {
     @RequestMapping(value = "/developers/{id}/delete", method = RequestMethod.GET)
     public String deleteDeveloper(@PathVariable Long id, Model model) {
         logger.debug("deleteDeveloper called with id: " + id);
-        DeveloperDTO developer = developerService.findById(id).orElse(null);
-        if (developer != null) {
-            developerService.delete(developer);
-        }
+        Optional<DeveloperDTO> developer = developerService.findById(id);
+        developer.ifPresent(developerService::delete);
         return REDIRECT_DEVELOPERS;
     }
 
@@ -116,7 +114,7 @@ public class DevelopersController {
     }
 
     @RequestMapping(value = "/developers/{id}/skills", method = RequestMethod.POST)
-    public String addSkill(@PathVariable Long id, @RequestParam Long skillId, Model model) {
+    public String addSkillToDeveloper(@PathVariable Long id, @RequestParam Long skillId, Model model) {
         logger.debug("addSkill called, developer/skill id: " + id + "/" + skillId);
         Optional<DeveloperDTO> developer = developerService.findById(id);
         if (!developer.isPresent()) {
@@ -135,7 +133,7 @@ public class DevelopersController {
     }
 
     @RequestMapping(value = "/developers/{id}/skills/{skillId}", method = RequestMethod.GET)
-    public String removeSkill(@PathVariable Long id, @PathVariable Long skillId, Model model) {
+    public String removeSkillFromDeveloper(@PathVariable Long id, @PathVariable Long skillId, Model model) {
         logger.debug("removeSkill called, developer/skill id: " + id + "/" + skillId);
         SkillDTO skill = skillService.findById(skillId).orElse(null);
         DeveloperDTO developer = developerService.findById(id).orElse(null);

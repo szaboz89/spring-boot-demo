@@ -48,14 +48,18 @@ public class SkillsControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void listSkills() throws Exception {
+
+        // given
         List<SkillDTO> skills = new ArrayList<>();
         skills.add(new SkillDTO());
         skills.add(new SkillDTO());
+
+        // when
         when(skillService.findAll()).thenReturn(skills);
         ArgumentCaptor<List<SkillDTO>> argumentCaptor = ArgumentCaptor.forClass(List.class);
-
         String viewName = skillsController.listSkills(model);
 
+        // then
         assertEquals("developers/skills", viewName);
         verify(skillService, times(1)).findAll();
         verify(model, times(1)).addAttribute(eq("skills"), argumentCaptor.capture());

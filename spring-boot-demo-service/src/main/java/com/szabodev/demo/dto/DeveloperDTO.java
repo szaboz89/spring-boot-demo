@@ -125,7 +125,7 @@ public class DeveloperDTO {
     }
 
     public boolean hasSkill(SkillDTO skill) {
-        return skills.contains(skill);
+        return skills != null && skills.contains(skill);
     }
 
     @Override

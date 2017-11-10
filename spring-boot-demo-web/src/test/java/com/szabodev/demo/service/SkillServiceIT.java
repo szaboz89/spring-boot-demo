@@ -30,7 +30,7 @@ public class SkillServiceIT {
 
     @Transactional
     @Test
-    public void saveOfDescription() throws Exception {
+    public void save() throws Exception {
         // given
         Iterable<Skill> skills = skillRepository.findAll();
         Skill testSkill = skills.iterator().next();
