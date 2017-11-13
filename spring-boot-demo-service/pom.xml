@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>RELEASE</version>
+            <version>${mapstruct.version}</version>
         </dependency>
     </dependencies>
 

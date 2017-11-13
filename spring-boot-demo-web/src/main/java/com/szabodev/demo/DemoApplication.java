@@ -5,7 +5,6 @@ import com.szabodev.demo.dto.SkillDTO;
 import com.szabodev.demo.service.SkillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,39 +29,30 @@ import java.util.Locale;
 @ComponentScan
 @SpringBootApplication
 @EnableScheduling
-public class DemoApplication implements CommandLineRunner {
+public class DemoApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
-
-    private final SkillService skillService;
-
-    private final AppConfig appConfig;
-
-    @Autowired
-    public DemoApplication(SkillService skillService, AppConfig appConfig) {
-        this.skillService = skillService;
-        this.appConfig = appConfig;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
+    @Bean
+    public CommandLineRunner commandLineRunner(SkillService skillService, AppConfig appConfig) {
+        return args -> {
+            if (skillService.findAll().size() == 0) {
+                List<SkillDTO> defaultSkills = new ArrayList<>();
+                defaultSkills.add(new SkillDTO("javascript", "Javascript language skill"));
+                defaultSkills.add(new SkillDTO("java", "Java language skill"));
+                defaultSkills.add(new SkillDTO("html", "HTML skill"));
+                defaultSkills.add(new SkillDTO("css", "CSS skill"));
+                defaultSkills.forEach(skillService::save);
+            }
 
-        if (skillService.findAll().size() == 0) {
-            List<SkillDTO> defaultSkills = new ArrayList<>();
-            defaultSkills.add(new SkillDTO("javascript", "Javascript language skill"));
-            defaultSkills.add(new SkillDTO("java", "Java language skill"));
-            defaultSkills.add(new SkillDTO("html", "HTML skill"));
-            defaultSkills.add(new SkillDTO("css", "CSS skill"));
-            defaultSkills.forEach(skillService::save);
-        }
-
-        String appVersion = appConfig.getAppVersion();
-        System.out.println("Application version: " + appVersion);
-        logger.info("Application version: " + appVersion);
+            String appVersion = appConfig.getAppVersion();
+            System.out.println("Application version: " + appVersion);
+            logger.info("Application version: " + appVersion);
+        };
     }
 
     @Bean
