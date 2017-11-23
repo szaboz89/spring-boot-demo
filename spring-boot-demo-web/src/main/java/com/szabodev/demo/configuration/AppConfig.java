@@ -21,6 +21,21 @@ public class AppConfig {
     @Value("${login.mode}")
     private String loginMode;
 
+    @Value("${ldap.url}")
+    private String ldapUrl;
+
+    @Value("${ldap.base.dn}")
+    private String ldapBaseDn;
+
+    @Value("${ldap.username}")
+    private String ldapUsername;
+
+    @Value("${ldap.password}")
+    private String ldapPassword;
+
+    @Value("${ldap.user.dn.pattern}")
+    private String ldapUserDnPattern;
+
     public String getAdminName() {
         return adminName;
     }
@@ -31,6 +46,26 @@ public class AppConfig {
 
     public String getLoginMode() {
         return loginMode;
+    }
+
+    String getLdapUrl() {
+        return ldapUrl;
+    }
+
+    String getLdapBaseDn() {
+        return ldapBaseDn;
+    }
+
+    String getLdapUsername() {
+        return ldapUsername;
+    }
+
+    String getLdapPassword() {
+        return ldapPassword;
+    }
+
+    String getLdapUserDnPattern() {
+        return ldapUserDnPattern;
     }
 
     /**

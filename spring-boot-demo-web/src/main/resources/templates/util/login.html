@@ -22,35 +22,31 @@
 <div th:insert="util/header :: body">...</div>
 <div class="container">
 
-    <!--suppress ThymeleafVariablesResolveInspection -->
-    <div th:if="${param.error}">
-        <div id="login-alert" class="alert alert-danger alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-            <span th:text="#{loginAlert}">Invalid username and password.</span>
-        </div>
-    </div>
-
-    <form id="loginform" class="form-signin" role="form" th:action="@{/login}" method="post">
-
-        <div style="margin-bottom: 25px" class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="login-username" type="text" class="form-control" name="username" value=""
-                   th:placeholder="#{username}" title="login-username">
-        </div>
-
-        <div style="margin-bottom: 25px" class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input id="login-password" type="password" class="form-control" name="password"
-                   th:placeholder="#{password}" title="login-password">
-        </div>
-
-        <div style="margin-top:10px" class="form-group">
-            <div class="col-sm-12 controls">
-                <input id="btn-login" class="btn btn-success" type="submit" th:value="#{loginMenu}"/>
+    <div style="margin: 0 auto; margin-top: 50px; width: 40%">
+        <!--suppress ThymeleafVariablesResolveInspection -->
+        <div th:if="${param.error}">
+            <div id="login-alert" class="alert alert-danger alert-dismissable row col-lg-12 text-center">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                <span th:text="#{loginAlert}">Login failed!</span>
             </div>
-
         </div>
-    </form>
+
+        <form id="loginform" role="form" th:action="@{/login}" method="post">
+            <div style="margin-bottom: 25px" class="input-group row col-lg-12 text-center">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input id="login-username" type="text" class="form-control" name="username" value="" title="username">
+            </div>
+            <div style="margin-bottom: 25px" class="input-group row col-lg-12 text-center">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input id="login-password" type="password" class="form-control" name="password" title="password">
+            </div>
+            <div class="form-group row col-lg-12 text-center">
+                <div>
+                    <input id="btn-login" class="btn btn-success" type="submit" value="Login" th:value="#{loginMenu}"/>
+                </div>
+            </div>
+        </form>
+    </div>
 
 </div>
 

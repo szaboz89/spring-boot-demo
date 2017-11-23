@@ -26,8 +26,11 @@ public class ApplicationEventsListener implements ApplicationListener<Authentica
     @SuppressWarnings("NullableProblems")
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
-        String username = ((UserDetails) event.getAuthentication().getPrincipal()).getUsername();
+        UserDetails principal = (UserDetails) event.getAuthentication().getPrincipal();
+        String username = principal.getUsername();
         logger.info("User successfully logged in, username: " + username);
+        logger.info("User's authorities:");
+        principal.getAuthorities().forEach(o -> logger.info(o.toString()));
         sessionStorage.setUsername(username);
         sessionStorage.setLoginTime(LocalDateTime.now());
     }

@@ -49,8 +49,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser(appConfig.getAdminName()).password(appConfig.getAdminPassword()).roles("ADMIN");
+        if ("ldap".equals(appConfig.getLoginMode())) {
+            auth
+                    .ldapAuthentication()
+                    .contextSource()
+                    .url(appConfig.getLdapUrl() + appConfig.getLdapBaseDn())
+                    .managerDn(appConfig.getLdapUsername())
+                    .managerPassword(appConfig.getLdapPassword())
+                    .and()
+                    .userDnPatterns(appConfig.getLdapUserDnPattern());
+        } else {
+            auth
+                    .inMemoryAuthentication()
+                    .withUser(appConfig.getAdminName()).password(appConfig.getAdminPassword()).roles("ADMIN");
+        }
     }
 }
