@@ -70,12 +70,13 @@ public class AppConfig {
 
     /**
      * Returns the application version string when you run the jar
-     * When you run from IntelliJ it returns null
+     * When you run from IntelliJ it returns 'Local'
      *
      * @return the Implementation-Version defined in the MANIFEST.MF
      */
     public String getAppVersion() {
-        return getClass().getPackage().getImplementationVersion();
+        String version = getClass().getPackage().getImplementationVersion();
+        return version != null ? version : "Local";
     }
 
 }

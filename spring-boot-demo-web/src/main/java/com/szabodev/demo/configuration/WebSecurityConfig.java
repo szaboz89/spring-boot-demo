@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         } else {
             auth
                     .inMemoryAuthentication()
-                    .withUser(appConfig.getAdminName()).password(appConfig.getAdminPassword()).roles("ADMIN");
+                    .withUser(appConfig.getAdminName()).password("{noop}" + appConfig.getAdminPassword()).roles("ADMIN");
         }
     }
 }

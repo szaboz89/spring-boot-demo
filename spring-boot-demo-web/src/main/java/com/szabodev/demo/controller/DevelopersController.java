@@ -3,7 +3,6 @@ package com.szabodev.demo.controller;
 import com.szabodev.demo.dao.DeveloperFilter;
 import com.szabodev.demo.dto.DeveloperDTO;
 import com.szabodev.demo.dto.SkillDTO;
-import com.szabodev.demo.model.DeveloperLevel;
 import com.szabodev.demo.service.DeveloperService;
 import com.szabodev.demo.service.SkillService;
 import org.slf4j.Logger;
@@ -48,7 +47,7 @@ public class DevelopersController {
             model.addAttribute("developerFilter", new DeveloperFilter());
         }
         model.addAttribute("editedDeveloper", new DeveloperDTO());
-        model.addAttribute("developerLevelValues", DeveloperLevel.stringValues());
+        model.addAttribute("developerLevelValues", DeveloperService.developerLevelValues());
         return DEVELOPERS;
     }
 
@@ -61,7 +60,7 @@ public class DevelopersController {
             model.addAttribute("developers", developerService.findAll());
             model.addAttribute("developerFilter", new DeveloperFilter());
             model.addAttribute("editedDeveloper", newDeveloper);
-            model.addAttribute("developerLevelValues", DeveloperLevel.stringValues());
+            model.addAttribute("developerLevelValues", DeveloperService.developerLevelValues());
             return DEVELOPERS;
         }
         if (newDeveloper.getId() != null) {
@@ -82,7 +81,7 @@ public class DevelopersController {
             model.addAttribute("developerFilter", new DeveloperFilter());
             model.addAttribute("developers", developerService.findAll());
             model.addAttribute("editedDeveloper", developer);
-            model.addAttribute("developerLevelValues", DeveloperLevel.stringValues());
+            model.addAttribute("developerLevelValues", DeveloperService.developerLevelValues());
             return DEVELOPERS;
         } else {
             return REDIRECT_DEVELOPERS;
@@ -146,5 +145,4 @@ public class DevelopersController {
         }
         return REDIRECT_DEVELOPERS;
     }
-
 }
