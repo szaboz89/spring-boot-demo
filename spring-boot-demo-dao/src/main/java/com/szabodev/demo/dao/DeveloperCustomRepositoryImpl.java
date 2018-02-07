@@ -1,13 +1,17 @@
 package com.szabodev.demo.dao;
 
 import com.szabodev.demo.model.Developer;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,15 +24,22 @@ public class DeveloperCustomRepositoryImpl implements DeveloperCustomRepository 
     @Override
     public List<Developer> findByDeveloperCriteria(DeveloperFilter developerFilter) {
 
-        Criteria cr = em.unwrap(Session.class).createCriteria(Developer.class);
+        Session session = em.unwrap(Session.class);
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Developer> criteria = builder.createQuery(Developer.class);
+        Root<Developer> developer = criteria.from(Developer.class);
+        List<Predicate> predicates = new ArrayList<>();
 
         if (developerFilter.getFirstName() != null && !"".equals((developerFilter.getFirstName()))) {
-            cr.add(Restrictions.ilike("firstName", "%" + (developerFilter.getFirstName() + "%")));
+            predicates.add(builder.like(builder.lower(developer.get("firstName")), "%" + developerFilter.getFirstName().toLowerCase() + "%"));
         }
 
         if (developerFilter.getLastName() != null && !"".equals(developerFilter.getLastName())) {
-            cr.add(Restrictions.ilike("lastName", "%" + (developerFilter.getLastName() + "%")));
+            predicates.add(builder.like(builder.lower(developer.get("lastName")), "%" + developerFilter.getLastName().toLowerCase() + "%"));
         }
-        return cr.list();
+
+        criteria.where(predicates.toArray(new Predicate[predicates.size()]));
+        Query<Developer> query = session.createQuery(criteria);
+        return query.getResultList();
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 @Controller
@@ -51,9 +52,9 @@ public class HomeController {
     }
 
     @RequestMapping("/language/{code}")
-    public String editDeveloper(@PathVariable String code, HttpServletRequest httpServletRequest) {
-        logger.debug("changeLanguage called, language code: " + code);
-        this.localeResolver.setLocale(httpServletRequest, null, new Locale(code));
+    public String changeLanguage(@PathVariable String code, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        logger.debug("changeLanguage called, language code: {}", code);
+        this.localeResolver.setLocale(httpServletRequest, httpServletResponse, new Locale(code));
         return "redirect:/";
     }
 

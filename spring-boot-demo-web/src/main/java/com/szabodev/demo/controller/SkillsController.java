@@ -21,6 +21,7 @@ public class SkillsController {
     private static final Logger logger = LoggerFactory.getLogger(SkillsController.class);
     private static final String SKILLS = "developers/skills";
     private static final String REDIRECT_SKILLS = "redirect:/skills";
+    private static final String NEW_SKILL = "newSkill";
 
     private final SkillService skillService;
 
@@ -32,20 +33,20 @@ public class SkillsController {
     @RequestMapping(value = "/skills", method = RequestMethod.GET)
     public String listSkills(Model model) {
         model.addAttribute("skills", skillService.findAll());
-        model.addAttribute("newSkill", new SkillDTO());
+        model.addAttribute(NEW_SKILL, new SkillDTO());
         return SKILLS;
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
-    public String addSkill(@Valid @ModelAttribute("newSkill") SkillDTO newSkill, BindingResult bindingResult, Model model) {
-        logger.debug("addSkill called, newSkill: " + newSkill);
+    public String addSkill(@Valid @ModelAttribute(NEW_SKILL) SkillDTO newSkill, BindingResult bindingResult, Model model) {
+        logger.debug("addSkill called, newSkill: {}", newSkill);
         if (bindingResult.hasErrors()) {
             logger.debug("bindingResult has errors: ");
             bindingResult.getAllErrors().forEach(objectError -> logger.debug(objectError.toString()));
-            model.addAttribute("newSkill", newSkill);
+            model.addAttribute(NEW_SKILL, newSkill);
         } else {
             skillService.save(newSkill);
-            model.addAttribute("newSkill", new SkillDTO());
+            model.addAttribute(NEW_SKILL, new SkillDTO());
         }
         model.addAttribute("skills", skillService.findAll());
 
@@ -54,7 +55,7 @@ public class SkillsController {
 
     @RequestMapping(value = "/skills/{id}/delete", method = RequestMethod.GET)
     public String deleteSkill(@PathVariable Long id) {
-        logger.debug("deleteSkill called with id: " + id);
+        logger.debug("deleteSkill called with id: {}", id);
         SkillDTO skill = skillService.findById(id).orElse(null);
         if (skill != null && !skill.isConnected()) {
             skillService.delete(skill);

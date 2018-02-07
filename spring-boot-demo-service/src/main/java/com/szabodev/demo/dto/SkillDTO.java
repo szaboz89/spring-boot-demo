@@ -1,6 +1,6 @@
 package com.szabodev.demo.dto;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 public class SkillDTO extends AuditDataDTO {
 

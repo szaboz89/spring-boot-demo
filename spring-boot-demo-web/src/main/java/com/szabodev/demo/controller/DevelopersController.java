@@ -27,6 +27,11 @@ public class DevelopersController {
     private static final String DEVELOPERS = "developers/developers";
     private static final String DEVELOPER_VIEW = "developers/developer";
 
+    private static final String DEVELOPER_LEVEL_VALUES = "developerLevelValues";
+    private static final String EDITED_DEVELOPER = "editedDeveloper";
+    private static final String DEVELOPER_FILTER = "developerFilter";
+    private static final String DEVELOPERS_ATTR = "developers";
+
     private final DeveloperService developerService;
     private final SkillService skillService;
 
@@ -37,37 +42,34 @@ public class DevelopersController {
     }
 
     @RequestMapping(value = "/developers", method = RequestMethod.GET)
-    public String listDevelopers(Model model, @ModelAttribute("developerFilter") DeveloperFilter developerFilter) {
-        logger.debug("listDevelopers called, developerFilter: " + developerFilter);
+    public String listDevelopers(Model model, @ModelAttribute(DEVELOPER_FILTER) DeveloperFilter developerFilter) {
+        logger.debug("listDevelopers called, developerFilter: {}", developerFilter);
         if (developerFilter != null) {
-            model.addAttribute("developerFilter", developerFilter);
-            model.addAttribute("developers", developerService.findByDeveloperCriteria(developerFilter));
+            model.addAttribute(DEVELOPER_FILTER, developerFilter);
+            model.addAttribute(DEVELOPERS_ATTR, developerService.findByDeveloperCriteria(developerFilter));
         } else {
-            model.addAttribute("developers", developerService.findAll());
-            model.addAttribute("developerFilter", new DeveloperFilter());
+            model.addAttribute(DEVELOPERS_ATTR, developerService.findAll());
+            model.addAttribute(DEVELOPER_FILTER, new DeveloperFilter());
         }
-        model.addAttribute("editedDeveloper", new DeveloperDTO());
-        model.addAttribute("developerLevelValues", DeveloperService.developerLevelValues());
+        model.addAttribute(EDITED_DEVELOPER, new DeveloperDTO());
+        model.addAttribute(DEVELOPER_LEVEL_VALUES, DeveloperService.developerLevelValues());
         return DEVELOPERS;
     }
 
     @RequestMapping(value = "/developers", method = RequestMethod.POST)
-    public String addDeveloper(@Valid @ModelAttribute("editedDeveloper") DeveloperDTO newDeveloper, BindingResult bindingResult, Model model) {
-        logger.debug("addDeveloper called, newDeveloper: " + newDeveloper);
+    public String addDeveloper(@Valid @ModelAttribute(EDITED_DEVELOPER) DeveloperDTO newDeveloper, BindingResult bindingResult, Model model) {
+        logger.debug("addDeveloper called, newDeveloper: {}", newDeveloper);
         if (bindingResult.hasErrors()) {
             logger.debug("bindingResult has errors: ");
             bindingResult.getAllErrors().forEach(objectError -> logger.debug(objectError.toString()));
-            model.addAttribute("developers", developerService.findAll());
-            model.addAttribute("developerFilter", new DeveloperFilter());
-            model.addAttribute("editedDeveloper", newDeveloper);
-            model.addAttribute("developerLevelValues", DeveloperService.developerLevelValues());
+            model.addAttribute(DEVELOPERS_ATTR, developerService.findAll());
+            model.addAttribute(DEVELOPER_FILTER, new DeveloperFilter());
+            model.addAttribute(EDITED_DEVELOPER, newDeveloper);
+            model.addAttribute(DEVELOPER_LEVEL_VALUES, DeveloperService.developerLevelValues());
             return DEVELOPERS;
         }
         if (newDeveloper.getId() != null) {
-            DeveloperDTO developerDTO = developerService.findById(newDeveloper.getId()).orElse(null);
-            if (developerDTO != null) {
-                newDeveloper.setSkills(developerDTO.getSkills());
-            }
+            developerService.findById(newDeveloper.getId()).ifPresent(developerDTO -> newDeveloper.setSkills(developerDTO.getSkills()));
         }
         developerService.save(newDeveloper);
         return REDIRECT_DEVELOPERS;
@@ -75,13 +77,13 @@ public class DevelopersController {
 
     @RequestMapping("/developers/{id}/edit")
     public String editDeveloper(@PathVariable Long id, Model model) {
-        logger.debug("editDeveloper called with id: " + id);
+        logger.debug("editDeveloper called with id: {}", id);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (developer != null) {
-            model.addAttribute("developerFilter", new DeveloperFilter());
-            model.addAttribute("developers", developerService.findAll());
-            model.addAttribute("editedDeveloper", developer);
-            model.addAttribute("developerLevelValues", DeveloperService.developerLevelValues());
+            model.addAttribute(DEVELOPER_FILTER, new DeveloperFilter());
+            model.addAttribute(DEVELOPERS_ATTR, developerService.findAll());
+            model.addAttribute(EDITED_DEVELOPER, developer);
+            model.addAttribute(DEVELOPER_LEVEL_VALUES, DeveloperService.developerLevelValues());
             return DEVELOPERS;
         } else {
             return REDIRECT_DEVELOPERS;
@@ -90,7 +92,7 @@ public class DevelopersController {
 
     @RequestMapping(value = "/developers/{id}/delete", method = RequestMethod.GET)
     public String deleteDeveloper(@PathVariable Long id, Model model) {
-        logger.debug("deleteDeveloper called with id: " + id);
+        logger.debug("deleteDeveloper called with id: {}", id);
         Optional<DeveloperDTO> developer = developerService.findById(id);
         developer.ifPresent(developerService::delete);
         return REDIRECT_DEVELOPERS;
@@ -98,7 +100,7 @@ public class DevelopersController {
 
     @RequestMapping("/developers/{id}")
     public String viewDeveloper(@PathVariable Long id, Model model) {
-        logger.debug("viewDeveloper called with id: " + id);
+        logger.debug("viewDeveloper called with id: {}", id);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (developer != null) {
             List<SkillDTO> skills = developer.getSkills();
@@ -114,7 +116,7 @@ public class DevelopersController {
 
     @RequestMapping(value = "/developers/{id}/skills", method = RequestMethod.POST)
     public String addSkillToDeveloper(@PathVariable Long id, @RequestParam Long skillId, Model model) {
-        logger.debug("addSkill called, developer/skill id: " + id + "/" + skillId);
+        logger.debug("addSkill called, developerId/skillId: {}/{}", id, skillId);
         Optional<DeveloperDTO> developer = developerService.findById(id);
         if (!developer.isPresent()) {
             return REDIRECT_DEVELOPERS;
@@ -122,18 +124,16 @@ public class DevelopersController {
             return REDIRECT_DEVELOPERS_ID + developer.get().getId();
         }
         Optional<SkillDTO> skill = skillService.findById(skillId);
-        if (skill.isPresent()) {
-            if (!developer.get().hasSkill(skill.get())) {
-                developer.get().getSkills().add(skill.get());
-                developerService.save(developer.get());
-            }
+        if (skill.isPresent() && !developer.get().hasSkill(skill.get())) {
+            developer.get().getSkills().add(skill.get());
+            developerService.save(developer.get());
         }
         return REDIRECT_DEVELOPERS_ID + developer.get().getId();
     }
 
     @RequestMapping(value = "/developers/{id}/skills/{skillId}", method = RequestMethod.GET)
     public String removeSkillFromDeveloper(@PathVariable Long id, @PathVariable Long skillId, Model model) {
-        logger.debug("removeSkill called, developer/skill id: " + id + "/" + skillId);
+        logger.debug("removeSkill called, developerId/skillId: {}/{}", id, skillId);
         SkillDTO skill = skillService.findById(skillId).orElse(null);
         DeveloperDTO developer = developerService.findById(id).orElse(null);
         if (skill != null && developer != null) {

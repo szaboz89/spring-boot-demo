@@ -28,7 +28,7 @@ public class ApplicationEventsListener implements ApplicationListener<Authentica
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         UserDetails principal = (UserDetails) event.getAuthentication().getPrincipal();
         String username = principal.getUsername();
-        logger.info("User successfully logged in, username: " + username);
+        logger.info("User successfully logged in, username: {}", username);
         logger.info("User's authorities:");
         principal.getAuthorities().forEach(o -> logger.info(o.toString()));
         sessionStorage.setUsername(username);

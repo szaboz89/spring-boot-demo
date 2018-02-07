@@ -14,9 +14,8 @@ public class DefaultExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
     @ExceptionHandler(value = Exception.class)
-    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-        logger.error("Exception occurred: " + e.getMessage());
-        e.printStackTrace();
+    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
+        logger.error("Exception occurred.", e);
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", e);
         mav.addObject("url", req.getRequestURL());

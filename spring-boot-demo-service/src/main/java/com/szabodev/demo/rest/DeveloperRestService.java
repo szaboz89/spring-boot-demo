@@ -46,13 +46,13 @@ public class DeveloperRestService {
 
     @GetMapping("/developers/{id}")
     public DeveloperDTO getDeveloper(@PathVariable Long id) {
-        logger.debug("getDeveloperById called with id: " + id);
+        logger.debug("getDeveloperById called with id: {}", id);
         return developerService.findById(id).orElse(null);
     }
 
     @GetMapping("/developers/{id}/skills")
     public List<SkillDTO> getDeveloperSkills(@PathVariable Long id) {
-        logger.debug("getDeveloperById called with id: " + id);
+        logger.debug("getDeveloperSkills called with id: {}", id);
         Optional<DeveloperDTO> byId = developerService.findById(id);
         if (byId.isPresent()) {
             return byId.get().getSkills();

@@ -25,13 +25,13 @@ public class SkillServiceImplTest {
     private SkillServiceImpl skillService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         skillService = new SkillServiceImpl(skillRepository, skillMapper);
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void findAll() {
         // given
         List<SkillDTO> skillsData = new ArrayList<>();
         skillsData.add(new SkillDTO());
@@ -41,7 +41,7 @@ public class SkillServiceImplTest {
         List<SkillDTO> skills = skillService.findAll();
 
         // then
-        assertEquals(skills.size(), 1);
+        assertEquals(1, skills.size());
     }
 
 }

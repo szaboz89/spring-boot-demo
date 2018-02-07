@@ -21,7 +21,7 @@ public class Skill extends AuditData {
     private List<Developer> developers;
 
     public boolean isConnected() {
-        return developers != null && developers.size() > 0;
+        return developers != null && !developers.isEmpty();
     }
 
     public Skill() {

@@ -1,9 +1,9 @@
 package com.szabodev.demo.dto;
 
 import com.szabodev.demo.model.DeveloperLevel;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +29,6 @@ public class DeveloperDTO {
     private ZonedDateTime modifiedDate;
     private String createdBy;
     private String modifiedBy;
-
-    public DeveloperDTO() {
-    }
 
     public Long getId() {
         return id;
