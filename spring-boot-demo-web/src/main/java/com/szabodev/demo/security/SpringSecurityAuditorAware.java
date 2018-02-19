@@ -1,4 +1,4 @@
-package com.szabodev.demo.util;
+package com.szabodev.demo.security;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
@@ -13,13 +13,10 @@ public class SpringSecurityAuditorAware implements AuditorAware<String> {
     @SuppressWarnings("NullableProblems")
     @Override
     public Optional<String> getCurrentAuditor() {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication == null || !authentication.isAuthenticated()) {
             return Optional.of("test");
         }
-
         return Optional.of(authentication.getName());
     }
 }

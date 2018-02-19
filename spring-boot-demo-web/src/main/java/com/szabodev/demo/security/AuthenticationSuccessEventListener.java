@@ -1,4 +1,4 @@
-package com.szabodev.demo.util;
+package com.szabodev.demo.security;
 
 import com.szabodev.demo.service.SessionStorage;
 import org.slf4j.Logger;
@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class ApplicationEventsListener implements ApplicationListener<AuthenticationSuccessEvent> {
+public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationEventsListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationSuccessEventListener.class);
 
     private final SessionStorage sessionStorage;
 
     @Autowired
-    public ApplicationEventsListener(SessionStorage sessionStorage) {
+    public AuthenticationSuccessEventListener(SessionStorage sessionStorage) {
         this.sessionStorage = sessionStorage;
     }
 
