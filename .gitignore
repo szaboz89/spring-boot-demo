@@ -25,3 +25,7 @@ nbdist/
 
 ### MVN ###
 .mvn
+
+### Log files ###
+log
+spring-boot-demo-web/log
